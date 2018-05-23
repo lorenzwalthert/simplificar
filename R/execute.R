@@ -75,9 +75,7 @@ vars_from_quo <- function(quos, data, k_dimensional) {
     ))
   }
   peeled <- map_if(peeled, class %in% "name", quo_text)
-  peeled <- map_if(peeled, class %in% c("call", "integer", "numeric"),
-    ~ tidyselect::vars_select(names(data), !! .x) %>% unname()
-  )
+  peeled <- tidyselect::vars_select(names(data), !!! peeled) %>% unname()
   if (k_dimensional == 1) {
     unlist(peeled)
   } else {
