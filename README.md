@@ -1,6 +1,7 @@
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/life%20cycle/#experimental)
-
+[![Travis build
+status](https://travis-ci.org/lorenzwalthert/simplificar.svg?branch=master)](https://travis-ci.org/lorenzwalthert/simplificar)
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # simplificar
