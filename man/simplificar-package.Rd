@@ -12,6 +12,14 @@ a tool for exploratory analysis early in the cycle of statistical model
 building where standardized plots should be available quickly, with few
 lines of code.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/lorenzwalthert/simplificar}
+  \item Report bugs at \url{https://github.com/lorenzwalthert/simplificar/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Lorenz Walthert \email{lorenz.walthert@icloud.com}
 

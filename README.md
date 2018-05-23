@@ -28,7 +28,7 @@ remotes::install_github("lorenzwalthert/simplificar")
 The package provides two interfaces for creating plots:
 
   - Low-level interface: The functions `vis_[n]d_[*]()`, e.g.
-    `vis_1d_distr()`. The let you draw one plot at once. They have an
+    `vis_1d_distr()` that let you draw one plot at once. They have an
     argument `aes`, which basically let you specify which aesthetics you
     want to map and how. There are always two versions of low-level
     interfaces: One that outputs the plot to the console (like
