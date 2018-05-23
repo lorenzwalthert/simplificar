@@ -86,7 +86,7 @@ plots %>%
   pull_gg(-2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="80%" />
 
 Note that in case a visualization has multiple columns, each of them is
 stored in a separate vector in the list column `aes`, The same is true
@@ -100,7 +100,7 @@ plots %>%
   merge_vis()
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="80%" />
 
 You can apply arbitrary transformations to one or multiple columns with
 `transform_cols`(). Further arguments to the transformer are passed at
@@ -138,7 +138,7 @@ multiple_vis %>%
   merge_vis(ncol = 3)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="80%" />
 
 As shown above, if you supply more arguments to `vis_cols()` than the
 indicated transformer has dimensions, it simply crates all combinations.
@@ -160,7 +160,7 @@ vis_2d_point(mtcars_converted, c("vs", "cyl"), width = 0.1, height = 0.1) %>%
   pull_gg()
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="80%" />
 
 We can also override the geom determined by the internal dispatch of
 `simplicar` by specifying the geom argument ourself. Hence, we can use
@@ -185,7 +185,7 @@ blow_gg(disabled_geom_dispatch, custom_breaks) %>%
   merge_vis(nrow = 2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="80%" />
 
 Note that you can also use `purrr::partial(..., .first = FALSE)` and
 per-fill some arguments of a low-level interface function and then feed
@@ -221,4 +221,4 @@ mtcars %>%
   pull_gg(2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="80%" />
