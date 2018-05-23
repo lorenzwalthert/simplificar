@@ -29,7 +29,8 @@ Suggests:
     forcats,
     testthat,
     vdiffr,
-    withr
+    withr,
+    readr
 Collate: 
     'convert.R'
     'utils.R'
