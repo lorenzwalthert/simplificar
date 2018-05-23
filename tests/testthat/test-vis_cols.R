@@ -1,10 +1,11 @@
 context("vis_cols")
+library("vdiffr")
 
 test_that("correct number of combs are generated depending on transformer", {
-  expect_equal(
+  expect_doppelganger(
+    "vis-2d-point default",
     vis_cols(iris, "Sepal.Width", "Petal.Width", transformer = vis_2d_point) %>%
-      nrow(),
-    1
+      pull_gg()
   )
 
   expect_equal(

@@ -1,0 +1,41 @@
+context("vis-1d-distr")
+
+library(vdiffr)
+
+test_that("to console", {
+  expect_doppelganger(
+    "default dispatch continous",
+    vis_1d_distr(mtcars, aes = "cyl") %>%
+      pull_gg()
+  )
+
+  expect_doppelganger(
+    "default dispatch discrete",
+    vis_1d_distr(mtcars_converted, aes = "cyl") %>%
+      pull_gg()
+  )
+
+  expect_doppelganger(
+    "override geom",
+    vis_1d_distr(mtcars, aes = "cyl", geom = ggplot2::geom_histogram) %>%
+      pull_gg()
+  )
+
+  expect_doppelganger(
+    "custom fill",
+    vis_1d_distr(mtcars, aes = "cyl", fill = "blue") %>%
+      pull_gg()
+  )
+
+  expect_doppelganger(
+    "custom other element passed with ...",
+    vis_1d_distr(mtcars, aes = "cyl", bw = 11) %>%
+      pull_gg()
+  )
+
+  expect_doppelganger(
+    "custom name ...",
+    vis_1d_distr(mtcars, aes = "cyl", name = "x.cyl") %>%
+      pull_gg()
+  )
+})
