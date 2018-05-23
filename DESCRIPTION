@@ -27,9 +27,13 @@ Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi
 Suggests: 
     dplyr,
     forcats,
-    testthat
+    testthat,
+    vdiffr,
+    withr
 Collate: 
     'convert.R'
+    'utils.R'
+    'data-sets.R'
     'data-structures.R'
     'doc.R'
     'execute.R'
@@ -41,4 +45,5 @@ Collate:
     're-exports.R'
     'set-args.R'
     'simplificar-package.R'
-    'utils.R'
+URL: https://github.com/lorenzwalthert/simplificar
+BugReports: https://github.com/lorenzwalthert/simplificar/issues
