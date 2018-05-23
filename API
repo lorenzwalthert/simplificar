@@ -1,0 +1,17 @@
+# API for simplificar package
+
+## Exported functions
+
+blow_gg(...)
+file_path(...)
+flatten_gg(tbl)
+merge_vis(data, ...)
+pull_gg(tbl, index = 1)
+time_stamp(name)
+transform_cols(data, cols, transformer, ...)
+vis_1d_distr(data, aes, name = NULL, geom = NULL, fill = "gray60", ...)
+vis_1d_distr_to_file(data, aes, name = NULL, geom = NULL, fill = "gray60", sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf")
+vis_2d_point(data, aes, names = NULL, geom = NULL, ...)
+vis_2d_point_to_file(data, aes, name = aes, sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf")
+vis_cols(data, ..., transformer = vis_1d_distr, sub_dir = NULL, called_for_side_effects = NULL, k_dimensional = NULL)
+widh_heigh_from_aspect_ration(ratio, scale = 5)

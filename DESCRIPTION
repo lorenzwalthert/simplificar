@@ -1,0 +1,44 @@
+Package: simplificar
+Type: Package
+Title: A high-level API for ggplot2
+Version: 0.1.0
+Authors@R: person("Lorenz", "Walthert", 
+    email = "lorenz.walthert@icloud.com", role = c("aut", "cre"))
+Maintainer: Lorenz Walthert <lorenz.walthert@icloud.com>
+Description: simplificar - for simplify in Spanish - is a high-level
+    API for ggplot2 that enables fast experiments. It is envisioned as
+    a tool for exploratory analysis early in the cycle of statistical model 
+    building where standardized plots should be available quickly, with few
+    lines of code.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    ggplot2,
+    tibble,
+    cli,
+    magrittr,
+    tidyselect,
+    rlang,
+    purrr,
+    gridExtra
+RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi::api_roclet"))
+Suggests: 
+    dplyr,
+    forcats,
+    testthat
+Collate: 
+    'convert.R'
+    'data-structures.R'
+    'doc.R'
+    'execute.R'
+    'file-system.R'
+    'templates.R'
+    'plot-1d-distr.R'
+    'plot-2d-point.R'
+    're-exports-tidyselect.R'
+    're-exports.R'
+    'set-args.R'
+    'simplificar-package.R'
+    'utils.R'
