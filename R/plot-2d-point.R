@@ -22,7 +22,7 @@
 #' @export
 vis_2d_point <- function(data,
                          aes,
-                         names = NULL,
+                         names = aes,
                          geom = NULL,
                          ...) {
   names <- set_name(names, aes)
@@ -52,12 +52,13 @@ vis_2d_point <- function(data,
 vis_2d_point_to_file <- function(data,
                                  aes,
                                  name = aes,
-                                 sub_dir = NULL,
+                                 sub_dir = deparse(substitute(data)),
                                  file = file_path(
                                    pkg_name(), sub_dir, time_stamp(name)
                                  ),
                                  dimensions = rep(unit(5, "cm"), 2),
-                                 device = "pdf") {
+                                 device = "pdf",
+                                 ...) {
   vis_to_file(vis_2d_point,
     data = data,
     aes = aes,
@@ -65,7 +66,8 @@ vis_2d_point_to_file <- function(data,
     sub_dir = sub_dir,
     file = file,
     dimensions = dimensions,
-    device = device
+    device = device,
+    ...
   )
 
 }

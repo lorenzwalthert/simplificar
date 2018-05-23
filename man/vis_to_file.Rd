@@ -4,9 +4,9 @@
 \alias{vis_to_file}
 \title{Generic arguments}
 \usage{
-vis_to_file(transformer, data, aes, name = aes, sub_dir = NULL,
-  file = file_path(pkg_name(), sub_dir, time_stamp(name)),
-  dimensions = rep(unit(5, "cm"), 2), device = "pdf")
+vis_to_file(transformer, data, aes, name = NULL, geom = NULL,
+  sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)),
+  dimensions = rep(unit(5, "cm"), 2), device = "pdf", ...)
 }
 \arguments{
 \item{transformer}{\code{[template parameter]} The bare name of the tranformer to
@@ -20,6 +20,9 @@ be shown.}
 \item{name}{The name of the variable to plot. If \code{NULL} (the default), the
 name is inferred form \code{aes}.}
 
+\item{geom}{The bare name of the geom to use. If \code{NULL} (the default),
+it is determined by the class of the data to plot.}
+
 \item{sub_dir}{The sub-directory to save the plot. marely used to
 construct the \code{file} argument.}
 
@@ -29,6 +32,9 @@ construct the \code{file} argument.}
 passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 
 \item{device}{Passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
+
+\item{...}{Variables to select. You can use tidy selectors such as
+\code{starts_with(...)}, see \code{\link[tidyselect:select_helpers]{tidyselect::select_helpers()}} for details.}
 }
 \description{
 Generic arguments

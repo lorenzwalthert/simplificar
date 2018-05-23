@@ -31,8 +31,13 @@ set_dots <- function(...) {
   all[names(all) != ""]
 }
 
-set_name <- function(sub, name) {
+set_name <- function(name, sub) {
   set_null_to(name, deparse(sub))
+}
+
+set_data_name <- function(data_name, name) {
+  if (!is.null(name)) return(name)
+  data_name
 }
 
 k_dimensional <- function(tranformer_name) {
@@ -45,9 +50,9 @@ k_dimensional <- function(tranformer_name) {
 #' @importFrom rlang is_empty
 set_vars <- function(quos, data, k_dimensional) {
   if (is_empty(quos)){
-    tidyselect::vars_select(names(data), everything())
+    vars <- tidyselect::vars_select(names(data), everything()) %>% unname()
   } else {
-    vars_from_quo(quos, data, k_dimensional)
+    vars <- vars_from_quo(quos, data, k_dimensional)
   }
 }
 

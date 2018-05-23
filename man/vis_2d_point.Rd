@@ -5,11 +5,12 @@
 \alias{vis_2d_point_to_file}
 \title{Create a scatter plot}
 \usage{
-vis_2d_point(data, aes, names = NULL, geom = NULL, ...)
+vis_2d_point(data, aes, names = aes, geom = NULL, ...)
 
-vis_2d_point_to_file(data, aes, name = aes, sub_dir = NULL,
-  file = file_path(pkg_name(), sub_dir, time_stamp(name)),
-  dimensions = rep(unit(5, "cm"), 2), device = "pdf")
+vis_2d_point_to_file(data, aes, name = aes,
+  sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
+  ...)
 }
 \arguments{
 \item{data}{A data frame with data to visualize.}

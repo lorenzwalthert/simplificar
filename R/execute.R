@@ -17,7 +17,7 @@
 #'   `[something]_[nd]_[something]` whereas `[something]` may not contain an
 #'   underscore and `n` is the number of dimensions. An example of a
 #'   transformer meeting this requirement is [vis_1d_distr()].
-#' @importFrom purrr map walk invoke map2
+#' @importFrom purrr map walk invoke map
 #' @importFrom rlang quos
 #' @examples
 #' # one aesthetic
@@ -43,15 +43,18 @@ vis_cols <- function(data,
   vars <- set_vars(quos(...), data, k_dimensional)
   data_name <- deparse(substitute(data))
 
-  sub_dir <- set_null_to(sub_dir, data_name)
   called_for_se <- set_called_for_side_effects(
     called_for_side_effects, transformer_name
   )
 
   if (called_for_se) {
+    sub_dir <- set_null_to(sub_dir, data_name)
+    if (sub_dir == ".") {
+      sub_dir <- NULL
+    }
     walk(vars, transformer, sub_dir = sub_dir, data = data)
   } else {
-    out <- map2(vars, data_name, transformer, data = data) %>%
+    out <- map(vars, transformer, data = data) %>%
       invoke(rbind, .)
     out$data <- data_name
     out
@@ -80,6 +83,7 @@ vars_from_quo <- function(quos, data, k_dimensional) {
   } else {
     peeled %>%
       unlist() %>%
+      unname() %>%
       combn(2, simplify = FALSE) %>%
       map(unlist)
   }

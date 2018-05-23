@@ -29,7 +29,7 @@ NULL
 #' @export
 vis_1d_distr <- function(data,
                          aes,
-                         name = NULL,
+                         name = aes,
                          geom = NULL,
                          fill = "gray60",
                          ...) {
@@ -58,23 +58,28 @@ vis_1d_distr <- function(data,
 #' @export
 vis_1d_distr_to_file <- function(data,
                                  aes,
-                                 name = NULL,
+                                 name = aes,
                                  geom = NULL,
                                  fill = "gray60",
-                                 sub_dir = NULL,
+                                 sub_dir = deparse(substitute(data)),
                                  file = file_path(
                                    pkg_name(), sub_dir, time_stamp(name)
                                  ),
                                  dimensions = rep(unit(5, "cm"), 2),
-                                 device = "pdf") {
+                                 device = "pdf",
+                                 ...) {
   vis_to_file(vis_1d_distr,
     data = data,
     aes = aes,
     name = name,
+    geom = geom,
     sub_dir = sub_dir,
     file = file,
     dimensions = dimensions,
-    device = device
+    device = device,
+    ...,
+    # arguments added to dots
+    fill = fill
   )
 }
 

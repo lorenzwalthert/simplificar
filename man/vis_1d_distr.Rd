@@ -6,11 +6,12 @@
 \alias{vis_1d_distr_to_file}
 \title{Plot a distribution}
 \usage{
-vis_1d_distr(data, aes, name = NULL, geom = NULL, fill = "gray60", ...)
+vis_1d_distr(data, aes, name = aes, geom = NULL, fill = "gray60", ...)
 
-vis_1d_distr_to_file(data, aes, name = NULL, geom = NULL, fill = "gray60",
-  sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)),
-  dimensions = rep(unit(5, "cm"), 2), device = "pdf")
+vis_1d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
+  sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
+  ...)
 }
 \arguments{
 \item{data}{A data frame with data to visualize.}
