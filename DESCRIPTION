@@ -20,13 +20,13 @@ Imports:
     gridExtra,
     magrittr,
     purrr,
+    readr,
     rlang,
     tibble,
     tidyselect
 Suggests: 
     dplyr,
     forcats,
-    readr,
     testthat,
     vdiffr,
     withr
