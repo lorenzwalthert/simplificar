@@ -1,5 +1,5 @@
-Package: simplificar
 Type: Package
+Package: simplificar
 Title: A high-level API for ggplot2
 Version: 0.1.0
 Authors@R: person("Lorenz", "Walthert", 
@@ -11,27 +11,29 @@ Description: simplificar - for simplify in Spanish - is a high-level
     building where standardized plots should be available quickly, with few
     lines of code.
 License: GPL-3
-Encoding: UTF-8
-LazyData: true
+URL: https://github.com/lorenzwalthert/simplificar
+BugReports: https://github.com/lorenzwalthert/simplificar/issues
 Imports: 
-    ggplot2,
-    tibble,
     cli,
-    magrittr,
-    tidyselect,
-    rlang,
-    purrr,
+    ggplot2,
+    grid,
     gridExtra,
-    grid
-RoxygenNote: 6.0.1.9000
-Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi::api_roclet"))
+    magrittr,
+    purrr,
+    rlang,
+    tibble,
+    tidyselect
 Suggests: 
     dplyr,
     forcats,
+    readr,
     testthat,
     vdiffr,
-    withr,
-    readr
+    withr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi::api_roclet"))
+RoxygenNote: 6.0.1.9000
 Collate: 
     'convert.R'
     'utils.R'
@@ -47,5 +49,3 @@ Collate:
     're-exports.R'
     'set-args.R'
     'simplificar-package.R'
-URL: https://github.com/lorenzwalthert/simplificar
-BugReports: https://github.com/lorenzwalthert/simplificar/issues
