@@ -21,7 +21,8 @@ Imports:
     tidyselect,
     rlang,
     purrr,
-    gridExtra
+    gridExtra,
+    grid
 RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi::api_roclet"))
 Suggests: 
