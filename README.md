@@ -118,44 +118,50 @@ mtcars_converted  <- mtcars %>%
 **Internal dispatch for different classes of data**
 
 For ggplot2, it is essential to use the correct class for each variable,
-otherwise, the plot may not look as expected. On top of that,
-`simplificar` offers an additional automatic dispatch layer. E.g. if we
-want to create a scatter plot for categorical variables, `simplificar`
-uses `ggplot2::geom_jitter()` instead of `ggplot::geom_point()`. Just
-adapt the transformer argument (defaults to `vis_1d_distr()`) to the
-desired transformation to create a scatter plot. Again, you can use tidy
-selectors.
+otherwise, the plot may not look as expected. That is why `simplificar`
+offers an automatic dispatch layer. Assuming you want to create scatter
+plots. You can select the corresponding transformer `vis_2d_point()`.
+`simplificar` will check if any plot you draw has categorical variables
+only. If so, you probably want to use `ggplot2::geom_jitter()` instead
+of `ggplot::geom_point()`. `simplificar` will take care of that and
+select the geom according to the variable class.
 
 ``` r
 multiple_vis <- mtcars_converted %>%
-  vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) 
-
-multiple_vis
-#> # A tibble: 3 x 6
-#>   data  aes_string class_string    gg       aes       class    
-#>   <chr> <chr>      <chr>           <list>   <list>    <list>   
-#> 1 .     vs, hp     factor, numeric <S3: gg> <chr [2]> <chr [2]>
-#> 2 .     vs, cyl    factor, factor  <S3: gg> <chr [2]> <chr [2]>
-#> 3 .     hp, cyl    numeric, factor <S3: gg> <chr [2]> <chr [2]>
-```
-
-If a visualization has multiple aesthetics, each of them is stored in a
-separate vector in the list column `aes`. This might be helpful for
-filtering (see below). The same is true for the class attribute. The
-columns `aes_string` and `class_string` contain all classes and
-aesthetics pasted together.
-
-``` r
+  vis_cols(contains("hp"), "cyl", transformer = vis_2d_point) 
 
 multiple_vis %>%
+  merge_vis(top = "Three plots in comparison")
+```
+
+<img src="man/figures/README-mtcars_converted_vis-1.png" width="80%" />
+
+If a visualization has multiple aesthetics, each of them is stored in a
+separate vector in the list column `aes` of the gg table (see below).
+The same is true for the class attribute. The columns `aes_string` and
+`class_string` contain all classes and aesthetics pasted together.
+
+``` r
+multiple_vis
+#> # A tibble: 1 x 6
+#>   data  aes_string class_string    gg       aes       class    
+#>   <chr> <chr>      <chr>           <list>   <list>    <list>   
+#> 1 .     hp, cyl    numeric, factor <S3: gg> <chr [2]> <chr [2]>
+```
+
+**Generating all pair-wise scatter plots**
+
+If you supply more variables to `vis_cols()` than the indicated
+transformer has dimensions, it simply crates all combinations. This is
+really useful if you want to create many plots.
+
+``` r
+mtcars_converted %>%
+  vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
   merge_vis(ncol = 3)
 ```
 
 <img src="man/figures/README-mtcars_converted_merged-1.png" width="80%" />
-
-As shown above, if you supply more variables to `vis_cols()` than the
-indicated transformer has dimensions, it simply crates all combinations.
-This is really useful if you want to create many plots.
 
 ### Low-level interface
 

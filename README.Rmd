@@ -110,33 +110,42 @@ mtcars_converted  <- mtcars %>%
 **Internal dispatch for different classes of data**
 
 For ggplot2, it is essential to use the correct class for each variable, 
-otherwise, the plot may not look as expected. On top of that, `simplificar`
-offers an additional automatic dispatch layer. E.g. if we want to create a 
-scatter plot for categorical variables, `simplificar` uses `ggplot2::geom_jitter()`
-instead of `ggplot::geom_point()`. 
-Just adapt the transformer argument (defaults to `vis_1d_distr()`) to the 
-desired transformation to create a scatter plot. Again, you can 
-use tidy selectors.
+otherwise, the plot may not look as expected. That is why `simplificar`
+offers an automatic dispatch layer. Assuming you want to create scatter plots. 
+You can select the corresponding transformer `vis_2d_point()`. 
+`simplificar` will check if any plot you draw has categorical variables only. 
+If so, you probably want to use `ggplot2::geom_jitter()` instead of 
+`ggplot::geom_point()`. `simplificar` will take care of that and select the 
+geom according to the variable class.
+
 ```{r, mtcars_converted_vis}
 multiple_vis <- mtcars_converted %>%
-  vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) 
+  vis_cols(contains("hp"), "cyl", transformer = vis_2d_point) 
 
-multiple_vis
+multiple_vis %>%
+  merge_vis(top = "Three plots in comparison")
 ```
 
 If a visualization has multiple aesthetics, each of them is stored in a separate
-vector in the list column `aes`. This might be helpful for filtering 
-(see below). The same is true for the class attribute. The columns `aes_string` 
-and `class_string` contain all classes and aesthetics pasted together.
-```{r, mtcars_converted_merged}
+vector in the list column `aes` of the gg table (see below). The same is true 
+for the class attribute. The columns `aes_string` and `class_string` contain all
+classes and aesthetics pasted together.
 
-multiple_vis %>%
-  merge_vis(ncol = 3)
+```{r}
+multiple_vis
 ```
 
-As shown above, if you supply more variables to `vis_cols()` than the indicated 
+**Generating all pair-wise scatter plots**
+
+If you supply more variables to `vis_cols()` than the indicated 
 transformer has dimensions, it simply crates all combinations. This is really useful if 
 you want to create many plots.
+
+```{r, mtcars_converted_merged}
+mtcars_converted %>%
+  vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
+  merge_vis(ncol = 3)
+```
 
 ### Low-level interface
 
