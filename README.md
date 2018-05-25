@@ -151,7 +151,7 @@ multiple_vis %>%
 
 <img src="man/figures/README-mtcars_converted_merged-1.png" width="80%" />
 
-As shown above, if you supply more arguments to `vis_cols()` than the
+As shown above, if you supply more variables to `vis_cols()` than the
 indicated transformer has dimensions, it simply crates all combinations.
 This is really useful if you want to create many plots.
 

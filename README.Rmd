@@ -131,7 +131,7 @@ multiple_vis %>%
   merge_vis(ncol = 3)
 ```
 
-As shown above, if you supply more arguments to `vis_cols()` than the indicated 
+As shown above, if you supply more variables to `vis_cols()` than the indicated 
 transformer has dimensions, it simply crates all combinations. This is really useful if 
 you want to create many plots.
 
