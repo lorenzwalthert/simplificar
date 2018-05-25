@@ -51,7 +51,7 @@ The package provides two interfaces for creating plots:
   plots for continuous data.
 * high-level interface: The function `vis_cols()` let's you plot various plots 
   at once, specifying a `transformer`, that is, a function belonging to the 
-  low-level interface introduced in the first bullet, e.g. `vis_1_distr()`. 
+  low-level interface introduced in the first bullet, e.g. `vis_1d_distr()`. 
   You can use tidy selectors. 
 
 This is best understood looking at some examples.
@@ -63,47 +63,48 @@ This is best understood looking at some examples.
 Let's first focus on `vis_cols()`. You can create plots with the distribution 
 of all variables in a data set as follows:
 
-```{r}
+```{r, iris_all}
 library(simplificar)
 (plots <- vis_cols(iris, transformer = vis_1d_distr))
 ```
 
 By default, all variables are selected. You can use tidy selectors (see 
 `?tidyselect::vars_select_helpers()`) to only create a few plots.
-```{r}
+```{r, iris_with}
 vis_cols(iris, contains("Width"))
 ```
 
 All plots are saved in the list column `gg`. You can use dplyr(-like) syntax
 to manipulate the tibble, e.g. you can pull out a certain plot from your gg 
 table. Let's pull the second last plot that has a numeric aesthetic.
-```{r}
+```{r, iris_pull}
 plots %>%
   dplyr::filter(class == "numeric") %>%
   pull_gg(-2)
 ```
 
-Note that in case a visualization has multiple columns, each of them is stored
-in a separate vector in the list column `aes`, The same is true for the class
-attribute. This might be helpful for filtering (see below).
 
 You can patch different visualizations into one.
-```{r}
+```{r, iris_merge}
 plots %>%
   merge_vis()
 ```
+
+**Transforming columns**
 
 You can apply arbitrary transformations to one or multiple columns with 
 `transform_cols`(). Further arguments to the transformer are passed at the last 
 position (via `...`). Here, we can use `readr::parse_factor()` for save factor 
 parsing.
 
-```{r}
+```{r, mtcars_convert}
 mtcars_converted  <- mtcars %>%
   transform_cols(c("vs", "am"), transformer = "readr::parse_factor", levels = 1:0) %>%
   transform_cols(c("cyl"), transformer = "readr::parse_factor", levels = c(4, 6, 8))
 
 ```
+
+**Internal dispatch for different classes of data**
 
 For ggplot2, it is essential to use the correct class for each variable, 
 otherwise, the plot may not look as expected. On top of that, `simplificar`
@@ -113,11 +114,18 @@ instead of `ggplot::geom_point()`.
 Just adapt the transformer argument (defaults to `vis_1d_distr()`) to the 
 desired transformation to create a scatter plot. Again, you can 
 use tidy selectors.
-```{r}
+```{r, mtcars_converted_vis}
 multiple_vis <- mtcars_converted %>%
   vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) 
 
 multiple_vis
+```
+
+If a visualization has multiple aesthetics, each of them is stored in a separate
+vector in the list column `aes`. This might be helpful for filtering 
+(see below). The same is true for the class attribute. The columns `aes_string` 
+and `class_string` contain all classes and aesthetics pasted together.
+```{r, mtcars_converted_merged}
 
 multiple_vis %>%
   merge_vis(ncol = 3)
@@ -137,10 +145,12 @@ effect to be so strong. Therefore, use the transformer directly and pass
 additional arguments that should go into the ggplot geom (in our
 case `ggplot2::gemo_jitter()`) via `...`.
 
-```{r}
+```{r, low_level_intro}
 vis_2d_point(mtcars_converted, c("vs", "cyl"), width = 0.1, height = 0.1) %>%
   pull_gg()
 ```
+
+** Using `ggplot2` syntax for very granular control**
 
 We can also override the geom determined by the internal dispatch of `simplicar`
 by specifying the geom argument ourself. Hence, we can use the initial `mtcars` 
@@ -149,7 +159,7 @@ the points. However, the way the axis are labeled in the upper plot is a bit
 unfortunate. Recall that `pull_gg()` returns a normal ggplot, so you can use 
 the `+` operator to customize it further.
 
-```{r}
+```{r, low_level_manipulate}
 # let's override the geom dispatch
 disabled_geom_dispatch <- vis_2d_point(mtcars, c("vs", "cyl"), 
   geom = ggplot2::geom_jitter, width = 0.1, height = 0.1) %>%
@@ -164,12 +174,23 @@ blow_gg(disabled_geom_dispatch, custom_breaks) %>%
   merge_vis(nrow = 2)
 ```
 
+You can also use `mutate_gg()` to manipulate certain raw gg objects.
+As stated above, you can use standard `ggplot2` syntax to modify existing plots.
+This is powerful in conjunction with mappers from the `purrr` package.
+Below, we add a mean line to plot 1 and 2.
+
+```{r, mutate_gg}
+mtcars %>%
+  vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
+  mutate_gg(ggplot2::stat_summary(fun.y = mean, geom = "line"), 1, 2) %>%
+  merge_vis(ncol = 3)
+```
 
 Note that you can also use `purrr::partial(..., .first = FALSE)` and per-fill 
 some arguments of a low-level interface function and then feed the new function into 
 the high-level interface as your *adjusted* transformer. Make sure you set 
 `.first = FALSE`.
-```{r}
+```{r, purrr_partial}
 vis_2d_point_with_weak_jitter <- purrr::partial(vis_2d_point, 
   width = 0.1, height = 0.1, .first = FALSE
 )
@@ -180,14 +201,3 @@ vis_cols(mtcars_converted, vs, cyl, hp,
 
 Note that you the you can only pre-fill arguments that are not determined by 
 `vis_cols()`, i.e. you cant' set `aes` and `names`.
-
-
-As stated above, you can use standard `ggplot2` syntax to modify existing plots.
-This is powerful in conjunction with mappers from the `purrr` package.
-Below, we add a mean line to plot 2 and 3.
-```{r}
-mtcars %>%
-    vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
-  dplyr::mutate(gg = purrr::map_at(.data$gg,c(2, 3), ~ .x + ggplot2::stat_summary(fun.y = mean, geom = "line"))) %>%
-  pull_gg(2)
-```

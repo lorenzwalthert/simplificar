@@ -42,7 +42,7 @@ The package provides two interfaces for creating plots:
   - high-level interface: The function `vis_cols()` let’s you plot
     various plots at once, specifying a `transformer`, that is, a
     function belonging to the low-level interface introduced in the
-    first bullet, e.g. `vis_1_distr()`. You can use tidy selectors.
+    first bullet, e.g. `vis_1d_distr()`. You can use tidy selectors.
 
 This is best understood looking at some examples.
 
@@ -89,12 +89,7 @@ plots %>%
   pull_gg(-2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="80%" />
-
-Note that in case a visualization has multiple columns, each of them is
-stored in a separate vector in the list column `aes`, The same is true
-for the class attribute. This might be helpful for filtering (see
-below).
+<img src="man/figures/README-iris_pull-1.png" width="80%" />
 
 You can patch different visualizations into one.
 
@@ -103,7 +98,9 @@ plots %>%
   merge_vis()
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="80%" />
+<img src="man/figures/README-iris_merge-1.png" width="80%" />
+
+**Transforming columns**
 
 You can apply arbitrary transformations to one or multiple columns with
 `transform_cols`(). Further arguments to the transformer are passed at
@@ -115,6 +112,8 @@ mtcars_converted  <- mtcars %>%
   transform_cols(c("vs", "am"), transformer = "readr::parse_factor", levels = 1:0) %>%
   transform_cols(c("cyl"), transformer = "readr::parse_factor", levels = c(4, 6, 8))
 ```
+
+**Internal dispatch for different classes of data**
 
 For ggplot2, it is essential to use the correct class for each variable,
 otherwise, the plot may not look as expected. On top of that,
@@ -136,12 +135,21 @@ multiple_vis
 #> 1 .     vs, hp     factor, numeric <S3: gg> <chr [2]> <chr [2]>
 #> 2 .     vs, cyl    factor, factor  <S3: gg> <chr [2]> <chr [2]>
 #> 3 .     hp, cyl    numeric, factor <S3: gg> <chr [2]> <chr [2]>
+```
+
+If a visualization has multiple aesthetics, each of them is stored in a
+separate vector in the list column `aes`. This might be helpful for
+filtering (see below). The same is true for the class attribute. The
+columns `aes_string` and `class_string` contain all classes and
+aesthetics pasted together.
+
+``` r
 
 multiple_vis %>%
   merge_vis(ncol = 3)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="80%" />
+<img src="man/figures/README-mtcars_converted_merged-1.png" width="80%" />
 
 As shown above, if you supply more arguments to `vis_cols()` than the
 indicated transformer has dimensions, it simply crates all combinations.
@@ -163,7 +171,9 @@ vis_2d_point(mtcars_converted, c("vs", "cyl"), width = 0.1, height = 0.1) %>%
   pull_gg()
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="80%" />
+<img src="man/figures/README-low_level_intro-1.png" width="80%" />
+
+\*\* Using `ggplot2` syntax for very granular control\*\*
 
 We can also override the geom determined by the internal dispatch of
 `simplicar` by specifying the geom argument ourself. Hence, we can use
@@ -188,7 +198,21 @@ blow_gg(disabled_geom_dispatch, custom_breaks) %>%
   merge_vis(nrow = 2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="80%" />
+<img src="man/figures/README-low_level_manipulate-1.png" width="80%" />
+
+You can also use `mutate_gg()` to manipulate certain raw gg objects. As
+stated above, you can use standard `ggplot2` syntax to modify existing
+plots. This is powerful in conjunction with mappers from the `purrr`
+package. Below, we add a mean line to plot 1 and 2.
+
+``` r
+mtcars %>%
+  vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
+  mutate_gg(ggplot2::stat_summary(fun.y = mean, geom = "line"), 1, 2) %>%
+  merge_vis(ncol = 3)
+```
+
+<img src="man/figures/README-mutate_gg-1.png" width="80%" />
 
 Note that you can also use `purrr::partial(..., .first = FALSE)` and
 per-fill some arguments of a low-level interface function and then feed
@@ -212,16 +236,3 @@ vis_cols(mtcars_converted, vs, cyl, hp,
 
 Note that you the you can only pre-fill arguments that are not
 determined by `vis_cols()`, i.e. you cant’ set `aes` and `names`.
-
-As stated above, you can use standard `ggplot2` syntax to modify
-existing plots. This is powerful in conjunction with mappers from the
-`purrr` package. Below, we add a mean line to plot 2 and 3.
-
-``` r
-mtcars %>%
-    vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
-  dplyr::mutate(gg = purrr::map_at(.data$gg,c(2, 3), ~ .x + ggplot2::stat_summary(fun.y = mean, geom = "line"))) %>%
-  pull_gg(2)
-```
-
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="80%" />
