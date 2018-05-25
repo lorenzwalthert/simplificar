@@ -78,10 +78,11 @@ vis_cols(iris, contains("Width"))
 #> 2 iris  Petal.Width numeric      <S3: gg> <chr [1]> <chr [1]>
 ```
 
-All plots are saved in the list column `gg`. You can use dplyr(-like)
-syntax to manipulate the tibble, e.g. you can pull out a certain plot
-from your gg table. Let’s pull the second last plot that has a numeric
-aesthetic.
+All plots are saved in the list column `gg`. We use the terminology gg
+table to refer to the tabular structure displayed above and raw gg to
+refer to a ggplot in the gg list column. You can use dplyr(-like) syntax
+to manipulate the gg table, e.g. you can pull out a certain raw gg.
+Let’s pull the second last plot that has a numeric aesthetic.
 
 ``` r
 plots %>%
@@ -91,7 +92,8 @@ plots %>%
 
 <img src="man/figures/README-iris_pull-1.png" width="80%" />
 
-You can patch different visualizations into one.
+You can patch different visualizations into one. All but the first
+argument passed to `merge_vis` go into `gridExra::girid.arrange()`.
 
 ``` r
 plots %>%
@@ -160,6 +162,8 @@ This is really useful if you want to create many plots.
 If you need more control over the visualizations you create, you can use
 the low-level interface.
 
+**Manipulating the geom**
+
 For example, in the above plot in the middle, you may don’t want the
 jitter effect to be so strong. Therefore, use the transformer directly
 and pass additional arguments that should go into the ggplot geom (in
@@ -173,37 +177,39 @@ vis_2d_point(mtcars_converted, c("vs", "cyl"), width = 0.1, height = 0.1) %>%
 
 <img src="man/figures/README-low_level_intro-1.png" width="80%" />
 
-\*\* Using `ggplot2` syntax for very granular control\*\*
-
 We can also override the geom determined by the internal dispatch of
 `simplicar` by specifying the geom argument ourself. Hence, we can use
 the initial `mtcars` data set again and we don’t nee to rely on variable
-class conversion to jitter the points. However, the way the axis are
-labeled in the upper plot is a bit unfortunate. Recall that `pull_gg()`
-returns a normal ggplot, so you can use the `+` operator to customize it
-further.
+class conversion to jitter the points.
 
 ``` r
 # let's override the geom dispatch
 disabled_geom_dispatch <- vis_2d_point(mtcars, c("vs", "cyl"), 
   geom = ggplot2::geom_jitter, width = 0.1, height = 0.1) %>%
   pull_gg()
+disabled_geom_dispatch
+```
 
-# Also, we want nicer break points
-custom_breaks <- disabled_geom_dispatch + 
+<img src="man/figures/README-disabled_geom_dispatch-1.png" width="80%" />
+
+**using ggplot2 aritmetric additions**
+
+The way the axis are labeled in the above plot is a bit unfortunate.
+Recall that `pull_gg()` returns a normal ggplot, so you can use the `+`
+operator to customize it further.
+
+``` r
+disabled_geom_dispatch + 
   ggplot2::scale_x_continuous(breaks = c(0, 1))
-
-# get back tabular format merge the visualizations. 
-blow_gg(disabled_geom_dispatch, custom_breaks) %>%
-  merge_vis(nrow = 2)
 ```
 
 <img src="man/figures/README-low_level_manipulate-1.png" width="80%" />
 
 You can also use `mutate_gg()` to manipulate certain raw gg objects. As
-stated above, you can use standard `ggplot2` syntax to modify existing
-plots. This is powerful in conjunction with mappers from the `purrr`
-package. Below, we add a mean line to plot 1 and 2.
+stated above, you can use standard `ggplot2` to modify raw ggplots.
+`mutate_gg()` takes a gg table, an addition you want to make plus the
+row numbers in the gg table you want to add the addition operation.
+Below, we add a mean line to plot 1 and 2.
 
 ``` r
 mtcars %>%
