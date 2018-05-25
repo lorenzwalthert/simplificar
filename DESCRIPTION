@@ -28,7 +28,6 @@ Suggests:
     dplyr,
     forcats,
     testthat,
-    vdiffr,
     withr,
     readr
 Collate: 
