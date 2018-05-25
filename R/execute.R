@@ -31,6 +31,7 @@
 #'   vis_cols(vs, hp, cyl, transformer = vis_2d_point) %>%
 #'   dplyr::slice(1) %>%
 #'   flatten_gg()
+#' @importFrom rlang enquos
 #' @export
 vis_cols <- function(data,
                      ...,
@@ -40,7 +41,7 @@ vis_cols <- function(data,
                      k_dimensional = NULL) {
   transformer_name <- deparse(substitute(transformer))
   k_dimensional <- set_null_to(k_dimensional, k_dimensional(transformer_name))
-  vars <- set_vars(quos(...), data, k_dimensional)
+  vars <- set_vars(enquos(...), data, k_dimensional)
   data_name <- deparse(substitute(data))
 
   called_for_se <- set_called_for_side_effects(

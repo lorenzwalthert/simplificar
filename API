@@ -6,6 +6,7 @@ blow_gg(...)
 file_path(...)
 flatten_gg(tbl)
 merge_vis(data, ...)
+mutate_gg(data, add, ...)
 pull_gg(tbl, index = 1)
 time_stamp(name)
 transform_cols(data, cols, transformer, ...)
@@ -15,3 +16,15 @@ vis_2d_point(data, aes, names = aes, geom = NULL, ...)
 vis_2d_point_to_file(data, aes, name = aes, sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir, time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf", ...)
 vis_cols(data, ..., transformer = vis_1d_distr, sub_dir = NULL, called_for_side_effects = NULL, k_dimensional = NULL)
 widh_heigh_from_aspect_ration(ratio, scale = 5)
+
+## Reexported objects
+
+::%>%
+tidyselect::contains
+tidyselect::ends_with
+tidyselect::everything
+tidyselect::last_col
+tidyselect::matches
+tidyselect::num_range
+tidyselect::one_of
+tidyselect::starts_with
