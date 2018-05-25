@@ -39,3 +39,14 @@ test_that("to console", {
       pull_gg()
   )
 })
+
+test_that("to file", {
+  withr::with_dir(
+    tempdir(), {
+      ts <- time_stamp() %>%
+        add_ext("png")
+      return <-  vis_1d_distr_to_file(mtcars, aes = "cyl", file = ts)
+      expect_true(file.exists(ts))
+      unlink(c(ts, return))
+    })
+})

@@ -23,8 +23,25 @@ test_that("to console", {
 
   expect_doppelganger(
     "custom names",
-    vis_2d_point(mtcars_converted, aes = c("cyl", "vs"),
-                 geom = ggplot2::geom_point, names = c("x", "Y")) %>%
+    vis_2d_point(mtcars_converted,
+      aes = c("cyl", "vs"),
+      geom = ggplot2::geom_point, names = c("x", "Y")
+    ) %>%
       pull_gg()
+  )
+})
+
+test_that("to file", {
+  withr::with_dir(
+    tempdir(), {
+      ts <- time_stamp() %>%
+        add_ext("png")
+      out <- vis_2d_point_to_file(iris,
+        c(x = "Sepal.Width", y = "Sepal.Length", size = "Petal.Width"),
+        file = ts, dimensions = width_heigh_from_aspect_ratio(1, scale = 5)
+      )
+      expect_true(file.exists(out))
+      unlink(c(ts, out))
+    }
   )
 })
