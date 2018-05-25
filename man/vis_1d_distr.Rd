@@ -2,7 +2,6 @@
 % Please edit documentation in R/plot-1d-distr.R
 \name{vis_1d_distr}
 \alias{vis_1d_distr}
-\alias{vis_1d_distr}
 \alias{vis_1d_distr_to_file}
 \title{Plot a distribution}
 \usage{

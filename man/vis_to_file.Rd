@@ -2,7 +2,7 @@
 % Please edit documentation in R/templates.R
 \name{vis_to_file}
 \alias{vis_to_file}
-\title{Generic arguments}
+\title{Visualize to a file}
 \usage{
 vis_to_file(transformer, data, aes, name = NULL, geom = NULL,
   sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)),
@@ -36,6 +36,9 @@ passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 \item{...}{Variables to select. You can use tidy selectors such as
 \code{starts_with(...)}, see \code{\link[tidyselect:select_helpers]{tidyselect::select_helpers()}} for details.}
 }
+\value{
+Returns the file name to which the visualization was written invisibly.
+}
 \description{
-Generic arguments
+Visualize to a file
 }

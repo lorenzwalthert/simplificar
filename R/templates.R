@@ -1,4 +1,4 @@
-#' Generic arguments
+#' Visualize to a file
 #'
 #' @param transformer `[template parameter]` The bare name of the tranformer to
 #'   use, e.g. `vis_2d_point`.
@@ -12,6 +12,8 @@
 #'   passed to [ggplot2::ggsave()].
 #' @param device Passed to [ggplot2::ggsave()].
 #' @name vis_to_file
+#' @return
+#' Returns the file name to which the visualization was written invisibly.
 vis_to_file <- function(transformer,
                         data,
                         aes,
@@ -25,10 +27,12 @@ vis_to_file <- function(transformer,
                         device = "pdf",
                         ...) {
   ensure_dir(dirname(file))
+  file_name <- add_ext(file, device)
   plot <- transformer(data, aes, name, geom, ...) %>%
     flatten_gg() %>%
     ggsave(
-      add_ext(file, device), .,
+      file_name, .,
       device = device, width = dimensions[1], height = dimensions[2]
     )
+  invisible(file_name)
 }
