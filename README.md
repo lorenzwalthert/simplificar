@@ -2,6 +2,8 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/life%20cycle/#experimental)
 [![Travis build
 status](https://travis-ci.org/lorenzwalthert/simplificar.svg?branch=master)](https://travis-ci.org/lorenzwalthert/simplificar)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/lorenzwalthert/simplificar?branch=master&svg=true)](https://ci.appveyor.com/project/lorenzwalthert/simplificar)<!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # simplificar
@@ -56,7 +58,7 @@ library(simplificar)
 (plots <- vis_cols(iris, transformer = vis_1d_distr))
 #> # A tibble: 5 x 6
 #>   data  aes_string   class_string gg       aes       class    
-#> * <chr> <chr>        <chr>        <list>   <list>    <list>   
+#>   <chr> <chr>        <chr>        <list>   <list>    <list>   
 #> 1 iris  Sepal.Length numeric      <S3: gg> <chr [1]> <chr [1]>
 #> 2 iris  Sepal.Width  numeric      <S3: gg> <chr [1]> <chr [1]>
 #> 3 iris  Petal.Length numeric      <S3: gg> <chr [1]> <chr [1]>

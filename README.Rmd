@@ -3,6 +3,7 @@ output: github_document
 ---
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/life cycle/#experimental)
   [![Travis build status](https://travis-ci.org/lorenzwalthert/simplificar.svg?branch=master)](https://travis-ci.org/lorenzwalthert/simplificar)
+  [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/lorenzwalthert/simplificar?branch=master&svg=true)](https://ci.appveyor.com/project/lorenzwalthert/simplificar)<!-- README.md is generated from README.Rmd. Please edit that file --> 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r setup, include = FALSE}

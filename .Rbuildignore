@@ -6,3 +6,4 @@
 ^README\.Rmd$
 ^simplificar$
 ^\.travis\.yml$
+^appveyor\.yml$
