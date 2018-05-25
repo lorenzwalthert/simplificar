@@ -55,6 +55,8 @@ vis_1d_distr <- function(data,
 #' @importFrom purrr partial
 #' @inheritParams vis_to_file
 #' @inheritParams vis_1d_distr
+#' @return
+#' Returns the file name to which the visualization was written invisibly.
 #' @export
 vis_1d_distr_to_file <- function(data,
                                  aes,
@@ -66,7 +68,6 @@ vis_1d_distr_to_file <- function(data,
                                    pkg_name(), sub_dir, time_stamp(name)
                                  ),
                                  dimensions = rep(unit(5, "cm"), 2),
-                                 device = "pdf",
                                  ...) {
   vis_to_file(vis_1d_distr,
     data = data,
@@ -76,10 +77,10 @@ vis_1d_distr_to_file <- function(data,
     sub_dir = sub_dir,
     file = file,
     dimensions = dimensions,
-    device = device,
     ...,
     # arguments added to dots
     fill = fill
-  )
+  ) %>%
+    invisible()
 }
 

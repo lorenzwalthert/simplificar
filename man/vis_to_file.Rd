@@ -6,7 +6,7 @@
 \usage{
 vis_to_file(transformer, data, aes, name = NULL, geom = NULL,
   sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)),
-  dimensions = rep(unit(5, "cm"), 2), device = "pdf", ...)
+  dimensions = rep(unit(5, "cm"), 2), ...)
 }
 \arguments{
 \item{transformer}{\code{[template parameter]} The bare name of the tranformer to
@@ -26,18 +26,15 @@ it is determined by the class of the data to plot.}
 \item{sub_dir}{The sub-directory to save the plot. marely used to
 construct the \code{file} argument.}
 
-\item{file}{The path to the file where the visualization should be stored.}
+\item{file}{The path to the file where the visualization should be stored.
+The file may contain an extension - or the extension can be specified with
+the \code{device} argument.}
 
-\item{dimensions}{Height and width constructed with \code{\link[base:units]{base::units()}},
+\item{dimensions}{Height and width constructed with \code{\link[grid:unit]{grid::unit()}},
 passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
-
-\item{device}{Passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 
 \item{...}{Variables to select. You can use tidy selectors such as
 \code{starts_with(...)}, see \code{\link[tidyselect:select_helpers]{tidyselect::select_helpers()}} for details.}
-}
-\value{
-Returns the file name to which the visualization was written invisibly.
 }
 \description{
 Visualize to a file

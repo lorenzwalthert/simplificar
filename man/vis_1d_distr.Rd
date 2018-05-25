@@ -9,8 +9,7 @@ vis_1d_distr(data, aes, name = aes, geom = NULL, fill = "gray60", ...)
 
 vis_1d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
-  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), ...)
 }
 \arguments{
 \item{data}{A data frame with data to visualize.}
@@ -31,12 +30,15 @@ it is determined by the class of the data to plot.}
 \item{sub_dir}{The sub-directory to save the plot. marely used to
 construct the \code{file} argument.}
 
-\item{file}{The path to the file where the visualization should be stored.}
+\item{file}{The path to the file where the visualization should be stored.
+The file may contain an extension - or the extension can be specified with
+the \code{device} argument.}
 
-\item{dimensions}{Height and width constructed with \code{\link[base:units]{base::units()}},
+\item{dimensions}{Height and width constructed with \code{\link[grid:unit]{grid::unit()}},
 passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
-
-\item{device}{Passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
+}
+\value{
+Returns the file name to which the visualization was written invisibly.
 }
 \description{
 Functions to create a distribution plot to be sent to the console or written

@@ -109,6 +109,7 @@ merge_vis <- function(data, ...) {
 #' Convenient wrapper for specifying height and width.
 #' @param ratio The aspect ratio.
 #' @param scale How to transform the ration to obtain width and heigh.
+#' @param units The measurement unit, e.g. "cm". See [grid::unit()].
 #' @export
 width_heigh_from_aspect_ratio <- function(ratio = 16/9, scale = 5, units = "cm") {
   grid::unit(scale * c(ratio, 1 / ratio), units)

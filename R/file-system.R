@@ -1,5 +1,24 @@
-add_ext <- function(x, ...) {
-  paste0(x, ".", ..., collapse = "")
+#' @importFrom purrr flatten_chr
+add_ext <- function(x, ..., check_ext = c("pdf", "png", "jpg", "jpeg")) {
+  dots <- list(...)
+  map(dots, add_ext_one, x = x, check_ext = check_ext) %>%
+    flatten_chr()
+}
+
+#' @importFrom purrr compact
+add_ext_one <- function(x, ..., check_ext) {
+  dots <- list(...)
+  if (length(compact(dots)) < 1L) return(x)
+  has_ext <- has_ext(x, check_ext)
+  x[!has_ext] <- paste0(x[!has_ext], ".", dots)
+  x
+}
+
+#' @importFrom purrr map_chr map_lgl
+has_ext <- function(x, extension) {
+  strsplit(x, ".", fixed = TRUE) %>%
+    map_chr(~.x[length(.x)]) %>%
+    map_lgl(~.x %in% extension)
 }
 
 ensure_dir <- function(name = pkg_name()) {

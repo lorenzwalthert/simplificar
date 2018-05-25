@@ -11,7 +11,7 @@ width_heigh_from_aspect_ratio(ratio = 16/9, scale = 5, units = "cm")
 
 \item{scale}{How to transform the ration to obtain width and heigh.}
 
-\item{units}{The measurement unit, e.g. "cm". See \code{\link[grid:units]{grid::units()}}.}
+\item{units}{The measurement unit, e.g. "cm". See \code{\link[grid:unit]{grid::unit()}}.}
 }
 \description{
 Convenient wrapper for specifying height and width.

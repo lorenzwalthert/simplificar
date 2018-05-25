@@ -57,7 +57,6 @@ vis_2d_point_to_file <- function(data,
                                    pkg_name(), sub_dir, time_stamp(name)
                                  ),
                                  dimensions = rep(unit(5, "cm"), 2),
-                                 device = "pdf",
                                  ...) {
   vis_to_file(vis_2d_point,
     data = data,
@@ -66,8 +65,6 @@ vis_2d_point_to_file <- function(data,
     sub_dir = sub_dir,
     file = file,
     dimensions = dimensions,
-    device = device,
     ...
   )
-
 }
