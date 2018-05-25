@@ -56,3 +56,26 @@ pull_gg <- function(tbl, index = 1) {
 gg_tbl_cols <- function() {
   quos(data = NA, aes_string = NA, class_string = NA, gg = NA, aes = NA, class = NA)
 }
+
+
+#' Mutate gg raw objects in a gg table
+#'
+#' A dplyr-like mutate to modify certain gg raw objects in a gg table.
+#' @param data A gg table.
+#' @param add Terms to add to the plot.
+#' @param ... Positional indices that indicate the row for which the
+#'   corresponding raw gg object should be modified.
+#' @importFrom purrr map_at
+#' @importFrom stats as.formula
+#' @examples
+#' mtcars %>%
+#'   vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
+#'   mutate_gg(ggplot2::stat_summary(fun.y = mean, geom = "line"), 2, 3) %>%
+#'   pull_gg(2)
+#' @export
+mutate_gg <- function(data, add, ...) {
+  dots <- c(...)
+  form <- as.formula(paste0("~.x + ", deparse(substitute(add))))
+  data$gg <- map_at(data$gg, dots, form)
+  data
+}
