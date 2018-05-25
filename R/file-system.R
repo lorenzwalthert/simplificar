@@ -33,6 +33,7 @@ file_path <- function(...) {
 #' @examples
 #' time_stamp("mtcars")
 #' @export
-time_stamp <- function(name) {
-  paste0(paste0(name, collapse = "-"), "--", format(Sys.Date(), "%Y-%m-%d"))
+time_stamp <- function(name = "x") {
+  prefix <- paste0(name, collapse = "-")
+  paste0(prefix, "--", format(Sys.Date(), "%Y-%m-%d"))
 }

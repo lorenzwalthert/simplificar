@@ -4,7 +4,7 @@
 \alias{time_stamp}
 \title{Create a time stamp with a name}
 \usage{
-time_stamp(name)
+time_stamp(name = "x")
 }
 \arguments{
 \item{name}{An identifier.}
