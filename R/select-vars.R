@@ -6,7 +6,7 @@
 #' kardinality `k_dimensional` are formed.
 #' @param quos Captured variabeles with `rlang::quos()`.
 #' @param data_name All column names of the data from which to select.
-#' @param k_dimenional The kardinality of the transformer.
+#' @param k_dimensional The kardinality of the transformer.
 #' @importFrom rlang abort quo_text
 #' @importFrom purrr map2 map_chr
 #' @importFrom utils combn

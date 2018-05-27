@@ -11,7 +11,7 @@ vars_from_quo(quos, data_name, k_dimensional)
 
 \item{data_name}{All column names of the data from which to select.}
 
-\item{k_dimenional}{The kardinality of the transformer.}
+\item{k_dimensional}{The kardinality of the transformer.}
 }
 \description{
 Wrapper around \code{\link[tidyselect:vars_select]{tidyselect::vars_select()}} with some pre-and post-processing.
