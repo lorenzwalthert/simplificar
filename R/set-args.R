@@ -1,24 +1,53 @@
+set_nd_geom_distr <- function(class, aes) {
+  if (length(aes) < 2L) {
+    set_1d_geom_distr(class)
+  } else {
+    set_2d_geom_distr(class)
+  }
+}
+
 #' @importFrom purrr when
 set_1d_geom_distr <- function(class) {
   when(class,
-    any((.) %in% c("numeric", "integer")) ~ geom_density,
-    ~  geom_bar
+       all((.) %in% c("numeric", "integer")) ~ quote(geom_density),
+       ~  quote(geom_bar)
   )
 }
 
-set_geom_2d_distr <- function(class) {
+#' @importFrom purrr when
+set_2d_geom_distr <- function(class) {
   when(class,
-       any((.) %in% c("numeric", "integer")) ~ geom_violin,
-       ~geom_jitter
+       any((.) %in% c("numeric", "integer")) ~ quote(geom_violin),
+       all((.) %in% c("numeric", "integer")) ~ quote(geom_density_2d),
   )
 }
 
 
-set_2d_geom_point <- function(class) {
+
+set_geom_point <- function(class) {
   when(class,
        any((.) %in% c("character", "factor", "integer")) ~ geom_jitter,
        ~ geom_point
   )
+}
+
+set_aes <- function(aes, names_data) {
+  aes_named_args <- c("x", "y")
+  check_aes(aes, names_data)
+  names_aes <- names(aes)
+  if (is.null(names_aes)) {
+    both <- c(x = aes[1])
+    if (length(aes) > 1L) {
+      both <- append(both, c(y = aes[2]))
+    }
+    return(both)
+  }
+  has_name <- names_aes != ""
+  named_args <- names(aes[has_name])
+  leftover <- setdiff(aes_named_args, named_args)
+  names_aes[!has_name] <- leftover
+  names(aes) <- names_aes
+  aes[c(aes_named_args[aes_named_args %in% names_aes], setdiff(names_aes, aes_named_args))]
 }
 
 #' Extracts dots and returns named elements
@@ -26,9 +55,32 @@ set_2d_geom_point <- function(class) {
 #' Otherwise, there is a downstream problem if functions use `...` and there
 #' are unnamed arguments, they are matched by position.
 #' @param ... Values passed to `...`.
-set_dots <- function(...) {
+drop_unnamed_dots <- function(...) {
   all <- list(...)
   all[names(all) != ""]
+}
+
+#' @examples
+#' simplificar:::drop_pkg_mask("ggplot2::geom()")
+drop_pkg_mask <- function(deparsed) {
+  strsplit(deparsed, "\\:{2,3}", fixed = FALSE, perl = TRUE) %>%
+    map_chr(~.x[length(.x)])
+}
+
+#' Setting the dot argument depending on the geom used.
+#' @param ... Values to be passed to the geom.
+#' @param geom The bare name of the geom to use.
+#' @param fill The fill argument to the geom which may or may not be applicable.
+set_dots_distr <- function(..., geom, fill) {
+  dots <- drop_unnamed_dots(...)
+  deparsed <- deparse(geom)
+  when(drop_pkg_mask(deparsed),
+       . == "geom_density" ~ c(dots, fill = fill),
+       . == "geom_density_2d" ~ dots,
+       . == "geom_bar" ~ c(dots, fill = fill),
+       . == "geom_histogram" ~ c(dots, fill = fill),
+       ~ dots
+  )
 }
 
 set_name <- function(name, sub) {
