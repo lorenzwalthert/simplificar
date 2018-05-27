@@ -23,7 +23,8 @@ Imports:
     readr,
     rlang,
     tibble,
-    tidyselect
+    tidyselect,
+    glue
 Suggests: 
     dplyr,
     forcats,

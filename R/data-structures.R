@@ -64,7 +64,8 @@ gg_tbl_cols <- function() {
 #' @param data A gg table.
 #' @param add Terms to add to the plot.
 #' @param ... Positional indices that indicate the row for which the
-#'   corresponding raw gg object should be modified.
+#'   corresponding raw gg object should be modified. If empty, all columns
+#'   are modified.
 #' @importFrom purrr map_at
 #' @importFrom stats as.formula
 #' @examples
@@ -73,11 +74,21 @@ gg_tbl_cols <- function() {
 #'   mutate_gg(ggplot2::stat_summary(fun.y = mean, geom = "line"), 2, 3) %>%
 #'   pull_gg(2)
 #' @export
+#' @importFrom rlang seq2
 mutate_gg <- function(data, add, ...) {
-  dots <- c(...)
+  dots <- set_dots_mutate(..., nrow = nrow(data))
   form <- as.formula(paste0("~.x + ", deparse(substitute(add))))
   data$gg <- map_at(data$gg, dots, form)
   data
+}
+
+set_dots_mutate <- function(..., nrow) {
+  dots <- c(...)
+  if (length(dots) == 0L) {
+    seq2(1, nrow)
+  } else {
+    dots
+  }
 }
 
 

@@ -10,4 +10,5 @@
 #' @param geom The bare name of the geom to use. If `NULL` (the default),
 #'   it is determined by the class of the data to plot.
 #' @name generic_exported
+#' @keywords internal
 NULL

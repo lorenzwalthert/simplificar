@@ -41,8 +41,9 @@ vis_cols <- function(data,
                      k_dimensional = NULL) {
   transformer_name <- deparse(substitute(transformer))
   k_dimensional <- set_null_to(k_dimensional, k_dimensional(transformer_name))
-  vars <- set_vars(enquos(...), data, k_dimensional)
   data_name <- deparse(substitute(data))
+  vars <- set_vars(enquos(...), names(data), k_dimensional)
+
 
   called_for_se <- set_called_for_side_effects(
     called_for_side_effects, transformer_name
