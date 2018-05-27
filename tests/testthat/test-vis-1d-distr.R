@@ -21,6 +21,14 @@ test_that("to console", {
       pull_gg()
   )
 
+  # DOES NOT (YET) WORK
+  # expect_doppelganger(
+  #   "override geom nse", {
+  #     ggg <- ggplot2::geom_histogram
+  #     vis_1d_distr(mtcars, aes = "cyl", geom = ggg) %>%
+  #       pull_gg()
+  # })
+
   expect_doppelganger(
     "custom fill",
     vis_1d_distr(mtcars, aes = "cyl", fill = "blue") %>%
