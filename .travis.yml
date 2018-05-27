@@ -2,3 +2,6 @@
 
 language: R
 sudo: false
+
+after_success:
+  - Rscript -e 'covr::codecov()'

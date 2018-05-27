@@ -3,7 +3,12 @@
 [![Travis build
 status](https://travis-ci.org/lorenzwalthert/simplificar.svg?branch=master)](https://travis-ci.org/lorenzwalthert/simplificar)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/lorenzwalthert/simplificar?branch=master&svg=true)](https://ci.appveyor.com/project/lorenzwalthert/simplificar)<!-- README.md is generated from README.Rmd. Please edit that file -->
+status](https://ci.appveyor.com/api/projects/status/github/lorenzwalthert/simplificar?branch=master&svg=true)](https://ci.appveyor.com/project/lorenzwalthert/simplificar)
+[![Coverage
+status](https://codecov.io/gh/lorenzwalthert/simplificar/branch/master/graph/badge.svg)](https://codecov.io/github/lorenzwalthert/simplificar?branch=master)
+
+<!-- README.md is generated from 
+  README.Rmd. Please edit that file -->
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # simplificar
@@ -100,7 +105,10 @@ argument passed to `merge_vis()` go into `gridExra::girid.arrange()`.
 
 ``` r
 plots %>%
-  merge_vis()
+  merge_vis(
+    top = "Density plots for continous, bar charts for categorical values", 
+    nrow = 2
+)
 ```
 
 <img src="man/figures/README-iris_merge-1.png" width="80%" />
@@ -108,9 +116,10 @@ plots %>%
 **Transforming columns**
 
 You can apply arbitrary transformations to one or multiple columns with
-`transform_cols`(). Further arguments to the transformer are passed at
-the last position (via `...`). Here, we can use `readr::parse_factor()`
-for safe factor parsing.
+`transform_cols()`. Your transformer need to have the vector to
+transform as first argument Further arguments to the transformer are
+passed at the last position (via `...`). Here, we can use
+`readr::parse_factor(x, ...)` for safe factor parsing.
 
 ``` r
 mtcars_converted  <- mtcars %>%
@@ -123,7 +132,7 @@ mtcars_converted  <- mtcars %>%
 For ggplot2, it is essential to use the correct class for each variable,
 otherwise, the plot may not look as expected. That is why `simplificar`
 offers an automatic dispatch layer. Assuming you want to create scatter
-plots. You can select the corresponding transformer `vis_2d_point()`.
+plots. You can select the corresponding transformer `vis_2d_point`.
 `simplificar` will check if any plot you draw has categorical variables
 only. If so, you probably want to use `ggplot2::geom_jitter()` instead
 of `ggplot::geom_point()`. `simplificar` will take care of that and
@@ -134,13 +143,13 @@ multiple_vis <- mtcars_converted %>%
   vis_cols(contains("hp"), "cyl", transformer = vis_2d_point) 
 
 multiple_vis %>%
-  merge_vis(top = "Internal Dispatch Demo:")
+  merge_vis()
 ```
 
 <img src="man/figures/README-mtcars_converted_vis-1.png" width="80%" />
 
 If a visualization has multiple aesthetics, each of them is stored in a
-separate vector in the list column `aes` of the gg table (see below).
+separate element in the list column `aes` of the gg table (see below).
 The same is true for the class attribute. The columns `aes_string` and
 `class_string` contain all classes and aesthetics pasted together.
 

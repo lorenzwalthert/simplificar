@@ -32,7 +32,8 @@ Suggests:
     vdiffr,
     withr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi::api_roclet"))
