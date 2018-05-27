@@ -66,6 +66,9 @@ library(simplificar)
 #> 5 iris  Species      factor       <S3: gg> <chr [1]> <chr [1]>
 ```
 
+If visualizations should be written to files, just use the corresponding
+low-level transformer (i.e. `vis_1d_distr_to_file`) instead.
+
 By default, all variables are selected. You can use tidy selectors (see
 `?tidyselect::vars_select_helpers()`) to only create a few plots.
 
@@ -78,7 +81,7 @@ vis_cols(iris, contains("Width"))
 #> 2 iris  Petal.Width numeric      <S3: gg> <chr [1]> <chr [1]>
 ```
 
-All plots are saved in the list column `gg`. We use the terminology gg
+All plots are stored in the list column `gg`. We use the terminology gg
 table to refer to the tabular structure displayed above and raw gg to
 refer to a ggplot in the gg list column. You can use dplyr(-like) syntax
 to manipulate the gg table, e.g. you can pull out a certain raw gg.
@@ -93,7 +96,7 @@ plots %>%
 <img src="man/figures/README-iris_pull-1.png" width="80%" />
 
 You can patch different visualizations into one. All but the first
-argument passed to `merge_vis` go into `gridExra::girid.arrange()`.
+argument passed to `merge_vis()` go into `gridExra::girid.arrange()`.
 
 ``` r
 plots %>%
@@ -107,7 +110,7 @@ plots %>%
 You can apply arbitrary transformations to one or multiple columns with
 `transform_cols`(). Further arguments to the transformer are passed at
 the last position (via `...`). Here, we can use `readr::parse_factor()`
-for save factor parsing.
+for safe factor parsing.
 
 ``` r
 mtcars_converted  <- mtcars %>%
@@ -131,7 +134,7 @@ multiple_vis <- mtcars_converted %>%
   vis_cols(contains("hp"), "cyl", transformer = vis_2d_point) 
 
 multiple_vis %>%
-  merge_vis(top = "Three plots in comparison")
+  merge_vis(top = "Internal Dispatch Demo:")
 ```
 
 <img src="man/figures/README-mtcars_converted_vis-1.png" width="80%" />
@@ -152,7 +155,7 @@ multiple_vis
 **Generating all pair-wise scatter plots**
 
 If you supply more variables to `vis_cols()` than the indicated
-transformer has dimensions, it simply crates all combinations. This is
+transformer has dimensions, it simply creates all combinations. This is
 really useful if you want to create many plots.
 
 ``` r
@@ -225,6 +228,8 @@ mtcars %>%
 ```
 
 <img src="man/figures/README-mutate_gg-1.png" width="80%" />
+
+If you don’t pass any value to `...`, all columns are modified.
 
 Note that you can also use `purrr::partial(..., .first = FALSE)` and
 per-fill some arguments of a low-level interface function and then feed
