@@ -21,3 +21,4 @@ it is determined by the class of the data to plot.}
 \description{
 Generic data selection
 }
+\keyword{internal}

@@ -12,7 +12,8 @@ mutate_gg(data, add, ...)
 \item{add}{Terms to add to the plot.}
 
 \item{...}{Positional indices that indicate the row for which the
-corresponding raw gg object should be modified.}
+corresponding raw gg object should be modified. If empty, all columns
+are modified.}
 }
 \description{
 A dplyr-like mutate to modify certain gg raw objects in a gg table.

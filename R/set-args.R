@@ -42,7 +42,8 @@ set_geom_point <- function(class) {
 #' @param aes The aesthetiscs to map.
 #' @param names_data The names of all columns.
 #' @examples
-#' set_aes(c(y = "cyl", "vs"), names(mtcars))
+#' simplificar:::set_aes(c(y = "cyl", "vs"), names(mtcars))
+#' @keywords internal
 set_aes <- function(aes, names_data) {
   aes_named_args <- c("x", "y")
   check_aes(aes, names_data)
@@ -67,15 +68,22 @@ set_aes <- function(aes, names_data) {
 #' Otherwise, there is a downstream problem if functions use `...` and there
 #' are unnamed arguments, they are matched by position.
 #' @param ... Values passed to `...`.
+#' @keywords internal
 drop_unnamed_dots <- function(...) {
   all <- list(...)
   all[names(all) != ""]
 }
 
+#' Drop the package mask
+#'
+#' @param pkg_string The name of a function, which may contain package prefix
+#'   that is to be removed.
 #' @examples
 #' simplificar:::drop_pkg_mask("ggplot2::geom()")
-drop_pkg_mask <- function(deparsed) {
-  strsplit(deparsed, "\\:{2,3}", fixed = FALSE, perl = TRUE) %>%
+#' @importFrom purrr map_chr
+#' @keywords internal
+drop_pkg_mask <- function(pkg_string) {
+  strsplit(pkg_string, "\\:{2,3}", fixed = FALSE, perl = TRUE) %>%
     map_chr(~.x[length(.x)])
 }
 
@@ -83,6 +91,7 @@ drop_pkg_mask <- function(deparsed) {
 #' @param ... Values to be passed to the geom.
 #' @param geom The bare name of the geom to use.
 #' @param fill The fill argument to the geom which may or may not be applicable.
+#' @keywords internal
 set_dots_distr <- function(..., geom, fill) {
   dots <- drop_unnamed_dots(...)
   deparsed <- deparse(geom)
@@ -112,11 +121,11 @@ k_dimensional <- function(tranformer_name) {
 }
 
 #' @importFrom rlang is_empty
-set_vars <- function(quos, data, k_dimensional) {
+set_vars <- function(quos, names_data, k_dimensional) {
   if (is_empty(quos)){
-    vars <- tidyselect::vars_select(names(data), everything()) %>% unname()
+    vars <- tidyselect::vars_select(names_data, everything()) %>% unname()
   } else {
-    vars <- vars_from_quo(quos, data, k_dimensional)
+    vars <- vars_from_quo(quos, names_data, k_dimensional)
   }
 }
 

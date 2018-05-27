@@ -16,3 +16,4 @@ set_dots_distr(..., geom, fill)
 \description{
 Setting the dot argument depending on the geom used.
 }
+\keyword{internal}

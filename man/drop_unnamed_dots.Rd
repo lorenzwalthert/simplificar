@@ -13,3 +13,4 @@ drop_unnamed_dots(...)
 Otherwise, there is a downstream problem if functions use \code{...} and there
 are unnamed arguments, they are matched by position.
 }
+\keyword{internal}

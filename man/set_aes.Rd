@@ -20,5 +20,6 @@ assume that x is always the first aesthetic. Hence, by creating a named
 vector, we can always refer to the aesthetics by name.
 }
 \examples{
-set_aes(c(y = "cyl", "vs"), names(mtcars))
+simplificar:::set_aes(c(y = "cyl", "vs"), names(mtcars))
 }
+\keyword{internal}
