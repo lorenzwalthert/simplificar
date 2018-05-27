@@ -5,5 +5,7 @@ sudo: false
 r_packages:
   - covr
 
+cache: packages
+
 after_success:
   - Rscript -e 'covr::codecov()'

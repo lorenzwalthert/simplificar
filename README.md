@@ -140,7 +140,7 @@ select the geom according to the variable class.
 
 ``` r
 multiple_vis <- mtcars_converted %>%
-  vis_cols(contains("hp"), "cyl", transformer = vis_2d_point) 
+  vis_cols(vs, "cyl", transformer = vis_2d_point) 
 
 multiple_vis %>%
   merge_vis()
@@ -186,10 +186,14 @@ dimensions in the plot manually via `k_dimensional` instead of using
 mtcars_converted %>%
   vis_cols(vs, contains("hp"), "mpg", transformer = vis_distr, k_dimensional = 2) %>%
   dplyr::slice(-1) %>%
+  mutate_gg(ggplot2::geom_point()) %>%
   merge_vis()
 ```
 
 <img src="man/figures/README-mtcars_converted_distr-1.png" width="80%" />
+
+We use `mutate_gg()` (see below) to add the raw data points to the
+plots.
 
 ### Low-level interface
 
