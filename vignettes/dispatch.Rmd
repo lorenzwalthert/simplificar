@@ -1,0 +1,48 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Distributions
+
+## One Dimensional
+
+- character, factor: Barplot
+- numeric, integer: Density plot (alternative: histogram)
+
+## Two dimensional
+
+- (character | factor, character | factor): geom_bin2d (not yet implemented)
+- (character | factor, numeric | integer): geom_violin (alternative: geom_boxplot)
+- (integer | numeric, character | factor): geom_violin (alternative: geom_boxplot)
+- (numeric | integer, numeric | integer): geom_density_2d
+
+
+Strategy: 
+- determine the classes of the variables to visualize
+- determine which geoms you want to plot returning a *quoted* geom.
+- determine which arguments this geom needs.
+
+Think about scoping.
+
+
+# Point
+
+## Two dimensional
+- (character | factor, character | factor): geom_jitter
+- (character | factor | numeric | integer, character | factor): geom_jitter
+- (character | factor, character | factor | numeric | integer): geom_jitter
+- (integer | numeric, integer | numeric): geom_point.

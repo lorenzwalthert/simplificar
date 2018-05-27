@@ -2,7 +2,7 @@
 % Please edit documentation in R/high-level-interface.R
 \name{vis_cols}
 \alias{vis_cols}
-\title{Visualize all colum}
+\title{Visualize all columns}
 \usage{
 vis_cols(data, ..., transformer = vis_1d_distr, sub_dir = NULL,
   called_for_side_effects = NULL, k_dimensional = NULL)
@@ -16,7 +16,7 @@ vis_cols(data, ..., transformer = vis_1d_distr, sub_dir = NULL,
 \item{transformer}{A transformation function that defines the concrete
 visualization.}
 
-\item{sub_dir}{The name of the sub-directory under ./whakahou used to
+\item{sub_dir}{The name of the sub-directory under ./simplificar used to
 save the data under, if you select a transformer with side effects. If
 set to \code{NULL} (the default), the name of the argument \code{data} is taken.}
 
@@ -34,13 +34,15 @@ underscore and \code{n} is the number of dimensions. An example of a
 transformer meeting this requirement is \code{\link[=vis_1d_distr]{vis_1d_distr()}}.}
 }
 \description{
-Visualize all colum
+Visualize all columns
 }
 \examples{
 # one aesthetic
 vis_cols(mtcars, 2) \%>\%
   flatten_gg()
-vis_cols(mtcars, contains("c"), "vs", transformer = vis_1d_distr) \%>\%
+vis_cols(mtcars, contains("c"), "vs",
+  transformer = vis_distr, k_dimensional = 2
+) \%>\%
  merge_vis()
 # all combinations of multiple aesthetics
 mtcars \%>\%
@@ -48,4 +50,8 @@ mtcars \%>\%
   vis_cols(vs, hp, cyl, transformer = vis_2d_point) \%>\%
   dplyr::slice(1) \%>\%
   flatten_gg()
+
+dummy_types \%>\%
+  vis_cols(num1, fct1, int1, transformer = vis_2d_distr) \%>\%
+  merge_vis()
 }

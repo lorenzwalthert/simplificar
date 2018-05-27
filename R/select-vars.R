@@ -1,12 +1,12 @@
 #' Select variables
 #'
 #' Wrapper around [tidyselect::vars_select()] with some pre-and post-processing.
-#' Most notable, for any number of selected varaiables that are greater than
+#' Most notable, for any number of selected variables that are greater than
 #' the number of dimensions, all sets of combinations of the variables with
-#' kardinality `k_dimensional` are formed.
-#' @param quos Captured variabeles with `rlang::quos()`.
+#' cardinality `k_dimensional` are formed.
+#' @param quos Captured variables with `rlang::quos()`.
 #' @param data_name All column names of the data from which to select.
-#' @param k_dimensional The kardinality of the transformer.
+#' @param k_dimensional The cardinality of the transformer.
 #' @importFrom rlang abort quo_text
 #' @importFrom purrr map2 map_chr
 #' @importFrom utils combn

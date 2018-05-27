@@ -161,7 +161,7 @@ multiple_vis
 #> 1 .     hp, cyl    numeric, factor <S3: gg> <chr [2]> <chr [2]>
 ```
 
-**Generating all pair-wise scatter plots**
+**Generating all pair-wise point visualizations**
 
 If you supply more variables to `vis_cols()` than the indicated
 transformer has dimensions, it simply creates all combinations. This is
@@ -173,7 +173,23 @@ mtcars_converted %>%
   merge_vis(ncol = 3)
 ```
 
-<img src="man/figures/README-mtcars_converted_merged-1.png" width="80%" />
+<img src="man/figures/README-mtcars_converted_merged_jitter-1.png" width="80%" />
+
+**Generating all pair-wise distribution visualizations**
+
+We can visualize the distribution in a similar fashion. Note that we can
+also use the transformer `vis_distr` and specify the number of
+dimensions in the plot manually via `k_dimensional` instead of using
+`vis_2d_distr`.
+
+``` r
+mtcars_converted %>%
+  vis_cols(vs, contains("hp"), "mpg", transformer = vis_distr, k_dimensional = 2) %>%
+  dplyr::slice(-1) %>%
+  merge_vis()
+```
+
+<img src="man/figures/README-mtcars_converted_distr-1.png" width="80%" />
 
 ### Low-level interface
 
@@ -193,7 +209,7 @@ vis_2d_point(mtcars_converted, c("vs", "cyl"), width = 0.1, height = 0.1) %>%
   pull_gg()
 ```
 
-<img src="man/figures/README-low_level_intro-1.png" width="80%" />
+<img src="man/figures/README-low_level_intro_jitter-1.png" width="80%" />
 
 We can also override the geom determined by the internal dispatch of
 `simplicar` by specifying the geom argument ourself. Hence, we can use
@@ -208,7 +224,7 @@ disabled_geom_dispatch <- vis_2d_point(mtcars, c("vs", "cyl"),
 disabled_geom_dispatch
 ```
 
-<img src="man/figures/README-disabled_geom_dispatch-1.png" width="80%" />
+<img src="man/figures/README-disabled_geom_dispatch_jitter-1.png" width="80%" />
 
 **using ggplot2 aritmetric additions**
 
@@ -252,6 +268,9 @@ vis_2d_point_with_weak_jitter <- purrr::partial(vis_2d_point,
 vis_cols(mtcars_converted, vs, cyl, hp,
   transformer = vis_2d_point_with_weak_jitter
 )
+#> Warning: Ignoring unknown parameters: width, height
+
+#> Warning: Ignoring unknown parameters: width, height
 #> # A tibble: 3 x 6
 #>   data             aes_string class_string    gg       aes       class    
 #>   <chr>            <chr>      <chr>           <list>   <list>    <list>   

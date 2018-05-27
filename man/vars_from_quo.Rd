@@ -7,15 +7,15 @@
 vars_from_quo(quos, data_name, k_dimensional)
 }
 \arguments{
-\item{quos}{Captured variabeles with \code{rlang::quos()}.}
+\item{quos}{Captured variables with \code{rlang::quos()}.}
 
 \item{data_name}{All column names of the data from which to select.}
 
-\item{k_dimensional}{The kardinality of the transformer.}
+\item{k_dimensional}{The cardinality of the transformer.}
 }
 \description{
 Wrapper around \code{\link[tidyselect:vars_select]{tidyselect::vars_select()}} with some pre-and post-processing.
-Most notable, for any number of selected varaiables that are greater than
+Most notable, for any number of selected variables that are greater than
 the number of dimensions, all sets of combinations of the variables with
-kardinality \code{k_dimensional} are formed.
+cardinality \code{k_dimensional} are formed.
 }

@@ -34,9 +34,9 @@ to a file.
 }
 \details{
 All functions documented here are just a forwarder to \code{vis_distr} and the
-reason for their existance is because when used as an input to \code{vis_cols},
+reason for their existence is because when used as an input to \code{vis_cols},
 the dimensions of the output can be derived from the name of the transformer,
-so the argument \code{k_dimensional} does not have to be specifyed.
+so the argument \code{k_dimensional} does not have to be specified.
 If the column has not the target class, you can convert one or multiple
 columns easily with \code{\link[=transform_cols]{transform_cols()}}.
 }

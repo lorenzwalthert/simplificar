@@ -15,8 +15,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "80%"
+  out.width = "80%", 
+  cache = TRUE
 )
+set.seed(1)
 ```
 
 
@@ -147,16 +149,30 @@ classes and aesthetics pasted together.
 multiple_vis
 ```
 
-**Generating all pair-wise scatter plots**
+**Generating all pair-wise point visualizations**
 
 If you supply more variables to `vis_cols()` than the indicated 
 transformer has dimensions, it simply creates all combinations. This is really useful if 
 you want to create many plots.
 
-```{r, mtcars_converted_merged}
+```{r, mtcars_converted_merged_jitter}
 mtcars_converted %>%
   vis_cols(vs, contains("hp"), "cyl", transformer = vis_2d_point) %>%
   merge_vis(ncol = 3)
+```
+
+
+**Generating all pair-wise distribution visualizations**
+
+We can visualize the distribution in a similar fashion. Note that we can also 
+use the transformer `vis_distr` and specify the number of dimensions in the plot
+manually via `k_dimensional` instead of using `vis_2d_distr`.
+
+```{r, mtcars_converted_distr}
+mtcars_converted %>%
+  vis_cols(vs, contains("hp"), "mpg", transformer = vis_distr, k_dimensional = 2) %>%
+  dplyr::slice(-1) %>%
+  merge_vis()
 ```
 
 ### Low-level interface
@@ -171,7 +187,7 @@ effect to be so strong. Therefore, use the transformer directly and pass
 additional arguments that should go into the ggplot geom (in our
 case `ggplot2::gemo_jitter()`) via `...`.
 
-```{r, low_level_intro}
+```{r, low_level_intro_jitter}
 vis_2d_point(mtcars_converted, c("vs", "cyl"), width = 0.1, height = 0.1) %>%
   pull_gg()
 ```
@@ -180,7 +196,7 @@ We can also override the geom determined by the internal dispatch of `simplicar`
 by specifying the geom argument ourself. Hence, we can use the initial `mtcars` 
 data set again and we don't nee to rely on variable class conversion to jitter 
 the points. 
-```{r disabled_geom_dispatch}
+```{r disabled_geom_dispatch_jitter}
 # let's override the geom dispatch
 disabled_geom_dispatch <- vis_2d_point(mtcars, c("vs", "cyl"), 
   geom = ggplot2::geom_jitter, width = 0.1, height = 0.1) %>%

@@ -17,8 +17,12 @@ set_1d_geom_distr <- function(class) {
 #' @importFrom purrr when
 set_2d_geom_distr <- function(class) {
   when(class,
-       any((.) %in% c("numeric", "integer")) ~ quote(geom_violin),
        all((.) %in% c("numeric", "integer")) ~ quote(geom_density_2d),
+       (.["y"] %in% c("numeric", "integer")) &
+          (.["x"] %in% c("factor", "character")) ~ quote(geom_violin),
+       (.["x"] %in% c("numeric", "integer")) &
+         (.["y"] %in% c("factor", "character")) ~ quote(geom_violin),
+       ~ quote(geom_boxplot)
   )
 }
 
@@ -26,8 +30,8 @@ set_2d_geom_distr <- function(class) {
 
 set_geom_point <- function(class) {
   when(class,
-       any((.) %in% c("character", "factor", "integer")) ~ geom_jitter,
-       ~ geom_point
+       all((.) %in% c("character", "factor", "integer")) ~ quote(geom_jitter),
+       ~ quote(geom_point)
   )
 }
 
@@ -36,10 +40,10 @@ set_geom_point <- function(class) {
 #' Turns a mapping that contains named and unnamed aesthetics into a vector with
 #' all aesthetics named according to the argument structure of `ggplot2::aes()`,
 #' which is `aes(x, y, ...)`. This may be used down-stream. E.g. for violin
-#' plots, the aesthetics x and y are not interchangable and it is unsafe to
+#' plots, the aesthetics x and y are not interchangeable and it is unsafe to
 #' assume that x is always the first aesthetic. Hence, by creating a named
 #' vector, we can always refer to the aesthetics by name.
-#' @param aes The aesthetiscs to map.
+#' @param aes The aesthetics to map.
 #' @param names_data The names of all columns.
 #' @examples
 #' simplificar:::set_aes(c(y = "cyl", "vs"), names(mtcars))
@@ -104,20 +108,23 @@ set_dots_distr <- function(..., geom, fill) {
   )
 }
 
-set_name <- function(name, sub) {
-  set_null_to(name, deparse(sub))
-}
 
 set_data_name <- function(data_name, name) {
   if (!is.null(name)) return(name)
   data_name
 }
 
-k_dimensional <- function(tranformer_name) {
-  stopifnot(length(tranformer_name) == 1)
-  k_d <- strsplit(tranformer_name, "_", fixed = TRUE)[[1]][2]
-  substr(k_d, 1, nchar(k_d) - 1) %>%
-    as.integer()
+k_dimensional <- function(transformer_name) {
+  stopifnot(length(transformer_name) == 1)
+  k_d <- strsplit(transformer_name, "_", fixed = TRUE)[[1]][2]
+  maybe_warning <- tryCatch(
+    substr(k_d, 1, nchar(k_d) - 1) %>%
+      as.numeric(), warning = function(w) w)
+  if (inherits(maybe_warning, "warning")) abort(paste0(
+    "argument k_dimensional may not be NULL if dimensions can't be derived ",
+    "from transformer. See ?vis_cols, argument k_dimensional."
+  ))
+  maybe_warning
 }
 
 #' @importFrom rlang is_empty

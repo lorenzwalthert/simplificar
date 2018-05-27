@@ -7,7 +7,7 @@
 set_aes(aes, names_data)
 }
 \arguments{
-\item{aes}{The aesthetiscs to map.}
+\item{aes}{The aesthetics to map.}
 
 \item{names_data}{The names of all columns.}
 }
@@ -15,7 +15,7 @@ set_aes(aes, names_data)
 Turns a mapping that contains named and unnamed aesthetics into a vector with
 all aesthetics named according to the argument structure of \code{ggplot2::aes()},
 which is \code{aes(x, y, ...)}. This may be used down-stream. E.g. for violin
-plots, the aesthetics x and y are not interchangable and it is unsafe to
+plots, the aesthetics x and y are not interchangeable and it is unsafe to
 assume that x is always the first aesthetic. Hence, by creating a named
 vector, we can always refer to the aesthetics by name.
 }

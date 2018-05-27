@@ -1,9 +1,9 @@
-#' Visualize all colum
+#' Visualize all columns
 #'
 #' @inheritParams generic_exported
 #' @param transformer A transformation function that defines the concrete
 #'   visualization.
-#' @param sub_dir The name of the sub-directory under ./whakahou used to
+#' @param sub_dir The name of the sub-directory under ./simplificar used to
 #'   save the data under, if you select a transformer with side effects. If
 #'   set to `NULL` (the default), the name of the argument `data` is taken.
 #' @param called_for_side_effects Whether or not the function is called for it's
@@ -76,6 +76,6 @@ vis_cols <- function(data,
 #' @param scale How to transform the ration to obtain width and heigh.
 #' @param units The measurement unit, e.g. "cm". See [grid::unit()].
 #' @export
-width_heigh_from_aspect_ratio <- function(ratio = 16/9, scale = 5, units = "cm") {
+width_height_from_aspect_ratio <- function(ratio = 16/9, scale = 5, units = "cm") {
   grid::unit(scale * c(ratio, 1 / ratio), units)
 }

@@ -50,7 +50,7 @@ test_that("to file", {
         add_ext("png")
       out <- vis_2d_point_to_file(iris,
         c(x = "Sepal.Width", y = "Sepal.Length", size = "Petal.Width"),
-        file = ts, dimensions = width_heigh_from_aspect_ratio(1, scale = 5)
+        file = ts, dimensions = width_height_from_aspect_ratio(1, scale = 5)
       )
       expect_true(file.exists(out))
       unlink(c(ts, out))

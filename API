@@ -11,11 +11,13 @@ pull_gg(tbl, index = 1)
 time_stamp(name = "x")
 transform_cols(data, cols, transformer, ...)
 vis_1d_distr(data, aes, name = aes, geom = NULL, fill = "gray60", ...)
-vis_1d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60", sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir, time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), ...)
+vis_2d_distr(data, aes, name = aes, geom = NULL, fill = "gray60", ...)
 vis_2d_point(data, aes, names = aes, geom = NULL, ...)
-vis_2d_point_to_file(data, aes, name = aes, sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir, time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), ...)
 vis_cols(data, ..., transformer = vis_1d_distr, sub_dir = NULL, called_for_side_effects = NULL, k_dimensional = NULL)
-width_heigh_from_aspect_ratio(ratio = 16/9, scale = 5, units = "cm")
+vis_distr(data, aes, name = aes, geom = NULL, fill = "gray60", ...)
+vis_point(data, aes, names = aes, geom = NULL, ...)
+vis_point_to_file(data, aes, name = aes, sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir, time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf", ...)
+width_height_from_aspect_ratio(ratio = 16/9, scale = 5, units = "cm")
 
 ## Reexported objects
 

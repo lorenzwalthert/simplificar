@@ -20,19 +20,20 @@
 #'   vis_2d_point(c("vs", "am"), width = 0.1, height = 0.1) %>%
 #'   pull_gg()
 #' @export
-vis_2d_point <- function(data,
+vis_point <- function(data,
                          aes,
                          names = aes,
                          geom = NULL,
                          ...) {
+  data <- as_tibble(data)
   aes <- set_aes(aes, names(data))
-  names <- set_name(names, aes)
+  names <- set_null_to(names, aes)
   class <- data[, aes] %>%
     map_chr(~class(.x)[1])
   geom <- set_null_to(geom, set_geom_point(class))
   dots <- drop_unnamed_dots(...)
   plot <- ggplot(data, invoke(aes_string, aes)) +
-    invoke(geom, dots) + xlab(names[1]) + ylab(names[2])
+    invoke(eval(geom), dots) + xlab(names[1]) + ylab(names[2])
   tibble(
     data = deparse(substitute(data)),
     aes_string = concentrate(aes),
@@ -43,29 +44,6 @@ vis_2d_point <- function(data,
   )
 }
 
-#' @include templates.R
-#' @describeIn vis_2d_point The same as vis_2d_point, but called for its side
-#'   effect, i.e. to save the visualization to a file.
-#' @importFrom purrr partial
-#' @inheritParams vis_to_file
-#' @inheritParams vis_2d_point
 #' @export
-vis_2d_point_to_file <- function(data,
-                                 aes,
-                                 name = aes,
-                                 sub_dir = deparse(substitute(data)),
-                                 file = file_path(
-                                   pkg_name(), sub_dir, time_stamp(name)
-                                 ),
-                                 dimensions = rep(unit(5, "cm"), 2),
-                                 ...) {
-  vis_to_file(vis_2d_point,
-    data = data,
-    aes = aes,
-    name = name,
-    sub_dir = sub_dir,
-    file = file,
-    dimensions = dimensions,
-    ...
-  )
-}
+#' @rdname vis_point
+vis_2d_point <- vis_point
