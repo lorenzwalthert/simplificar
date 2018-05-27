@@ -31,6 +31,18 @@ set_geom_point <- function(class) {
   )
 }
 
+#' Set the aesthetics mapping
+#'
+#' Turns a mapping that contains named and unnamed aesthetics into a vector with
+#' all aesthetics named according to the argument structure of `ggplot2::aes()`,
+#' which is `aes(x, y, ...)`. This may be used down-stream. E.g. for violin
+#' plots, the aesthetics x and y are not interchangable and it is unsafe to
+#' assume that x is always the first aesthetic. Hence, by creating a named
+#' vector, we can always refer to the aesthetics by name.
+#' @param aes The aesthetiscs to map.
+#' @param names_data The names of all columns.
+#' @examples
+#' set_aes(c(y = "cyl", "vs"), names(mtcars))
 set_aes <- function(aes, names_data) {
   aes_named_args <- c("x", "y")
   check_aes(aes, names_data)
