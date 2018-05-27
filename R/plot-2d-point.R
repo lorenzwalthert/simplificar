@@ -28,8 +28,8 @@ vis_2d_point <- function(data,
   names <- set_name(names, aes)
   class <- data[, aes] %>%
     map_chr(~class(.x)[1])
-  geom <- set_null_to(geom, set_2d_geom_point(class))
-  dots <- set_dots(...)
+  geom <- set_null_to(geom, set_geom_point(class))
+  dots <- drop_unnamed_dots(...)
   plot <- ggplot(data, invoke(aes_string, aes)) +
     invoke(geom, dots) + xlab(names[1]) + ylab(names[2])
   tibble(

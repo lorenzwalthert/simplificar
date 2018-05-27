@@ -33,12 +33,17 @@ vis_1d_distr <- function(data,
                          geom = NULL,
                          fill = "gray60",
                          ...) {
-  dots <- set_dots(...)
+  aes <- set_aes(aes, names(data))
   name <- set_name(name, aes)
   class <- class(unlist(data[, aes]))
-  geom <- set_null_to(geom, set_1d_geom_distr(class))
+  if(is.null(geom)) {
+    geom <- set_nd_geom_distr(class, aes)
+  } else {
+    geom <- substitute(geom)
+  }
+  dots <- set_dots_distr(..., geom = substitute(geom), fill = fill)
   plot <- ggplot(data, invoke(aes_string, aes)) +
-    invoke(geom, c(fill = fill, dots)) + xlab(name)
+    invoke(eval(geom), dots) + xlab(name)
   tibble(
     data = deparse(substitute(data)),
     aes_string = concentrate(aes),
@@ -48,6 +53,7 @@ vis_1d_distr <- function(data,
     class = list(class)
   )
 }
+
 
 #' @include templates.R
 #' @describeIn vis_1d_distr The same as vis_1d_distr, but called for its side
