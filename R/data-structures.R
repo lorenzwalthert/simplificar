@@ -79,3 +79,19 @@ mutate_gg <- function(data, add, ...) {
   data$gg <- map_at(data$gg, dots, form)
   data
 }
+
+
+
+#' Merge visualizations into one
+#'
+#' Simple wrapper around [gridExtra::grid.arrange()].
+#' @param data A `gg table`, that is, a data frame with plots, see [blow_gg()].
+#' @param ... Further parameters passed to [gridExtra::grid.arrange()].
+#' @importFrom purrr invoke
+#' @examples
+#' plots <- vis_cols(iris, transformer = vis_1d_distr)
+#' merge_vis(plots)
+#' @export
+merge_vis <- function(data, ...) {
+  invoke(gridExtra::grid.arrange, data$gg, ...)
+}
