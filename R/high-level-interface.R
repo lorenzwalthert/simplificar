@@ -23,7 +23,9 @@
 #' # one aesthetic
 #' vis_cols(mtcars, 2) %>%
 #'   flatten_gg()
-#' vis_cols(mtcars, contains("c"), "vs", transformer = vis_1d_distr) %>%
+#' vis_cols(mtcars, contains("c"), "vs",
+#'   transformer = vis_distr, k_dimensional = 2
+#' ) %>%
 #'  merge_vis()
 #' # all combinations of multiple aesthetics
 #' mtcars %>%
@@ -31,6 +33,10 @@
 #'   vis_cols(vs, hp, cyl, transformer = vis_2d_point) %>%
 #'   dplyr::slice(1) %>%
 #'   flatten_gg()
+#'
+#' dummy_types %>%
+#'   vis_cols(num1, fct1, int1, transformer = vis_2d_distr) %>%
+#'   merge_vis()
 #' @importFrom rlang enquos
 #' @export
 vis_cols <- function(data,
