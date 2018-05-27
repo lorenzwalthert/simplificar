@@ -25,6 +25,7 @@ vis_2d_point <- function(data,
                          names = aes,
                          geom = NULL,
                          ...) {
+  aes <- set_aes(aes, names(data))
   names <- set_name(names, aes)
   class <- data[, aes] %>%
     map_chr(~class(.x)[1])

@@ -62,48 +62,6 @@ vis_cols <- function(data,
   }
 }
 
-#' @importFrom rlang abort quo_text
-#' @importFrom purrr map_if map_chr
-#' @importFrom utils combn
-vars_from_quo <- function(quos, data, k_dimensional) {
-  peeled <- map(quos, ~ rlang::get_expr(.x))
-  class <- map_chr(peeled, ~ class(.x)[1])
-  if (!all(class %in% c("name", "call", "character", "integer", "numeric"))) {
-    abort(paste(
-      "variables selected in ... must be either bare (e.g. vs),",
-      "quoted (e.g. 'vs'), selected with a tidyselect verb",
-      "(e.g. contains('vs') or indicate a column index."
-    ))
-  }
-  peeled <- map_if(peeled, class %in% "name", quo_text)
-  peeled <- tidyselect::vars_select(names(data), !!! peeled) %>% unname()
-  if (k_dimensional == 1) {
-    unlist(peeled)
-  } else {
-    peeled %>%
-      unlist() %>%
-      unname() %>%
-      combn(2, simplify = FALSE) %>%
-      map(unlist)
-  }
-}
-
-
-
-#' Merge visualizations into one
-#'
-#' Simple wrapper around [gridExtra::grid.arrange()].
-#' @param data A `gg table`, that is, a data frame with plots, see [blow_gg()].
-#' @param ... Further parameters passed to [gridExtra::grid.arrange()].
-#' @importFrom purrr invoke
-#' @examples
-#' plots <- vis_cols(iris, transformer = vis_1d_distr)
-#' merge_vis(plots)
-#' @export
-merge_vis <- function(data, ...) {
-  invoke(gridExtra::grid.arrange, data$gg, ...)
-}
-
 #' Define the aspect ration and it's scale
 #'
 #' Convenient wrapper for specifying height and width.

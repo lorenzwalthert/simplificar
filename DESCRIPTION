@@ -29,23 +29,28 @@ Suggests:
     forcats,
     testthat,
     vdiffr,
-    withr
+    withr,
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate", "pkgapi::api_roclet"))
 RoxygenNote: 6.0.1.9000
 Collate: 
+    'assert.R'
     'convert.R'
     'utils.R'
     'data-sets.R'
     'data-structures.R'
     'doc.R'
-    'execute.R'
     'file-system.R'
+    'high-level-interface.R'
     'templates.R'
-    'plot-1d-distr.R'
-    'plot-2d-point.R'
+    'low-level-interface-plot-distr.R'
+    'low-level-interface-point.R'
     're-exports-tidyselect.R'
     're-exports.R'
+    'select-vars.R'
     'set-args.R'
     'simplificar-package.R'
+VignetteBuilder: knitr
