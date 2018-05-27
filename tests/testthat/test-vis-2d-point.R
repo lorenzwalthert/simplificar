@@ -3,23 +3,35 @@ context("vis-2d-point")
 library(vdiffr)
 
 test_that("to console", {
-  expect_doppelganger(
-    "default dispatch point",
-    vis_2d_point(mtcars, aes = c("cyl", "vs")) %>%
-      pull_gg()
-  )
-
   # expect_doppelganger(
-  #   "default dispatch jitter",
-  #   vis_2d_point(mtcars_converted, aes = c("cyl", "vs")) %>%
+  #   "default dispatch point: int / int -> jitter",
+  #   vis_2d_point(dummy_types, aes = c("int1", "int2")) %>%
   #     pull_gg()
   # )
 
   expect_doppelganger(
-    "override dispatch jitter",
-    vis_2d_point(mtcars_converted, aes = c("cyl", "vs"), geom = ggplot2::geom_area) %>%
+    "default dispatch point: int / num -> point",
+    vis_2d_point(dummy_types, aes = c("int2", "num1")) %>%
       pull_gg()
   )
+
+  expect_doppelganger(
+    "default dispatch point: int / chr -> point",
+    vis_2d_point(dummy_types, aes = c("int2", "num1")) %>%
+      pull_gg()
+  )
+
+  # expect_doppelganger(
+  #   "default dispatch point: int / int -> jitter",
+  #   vis_2d_point(dummy_types, aes = c("int2", "int2")) %>%
+  #     pull_gg()
+  # )
+
+  # expect_doppelganger(
+  #   "override dispatch jitter",
+  #   vis_2d_point(mtcars_converted, aes = c("cyl", "vs"), geom = ggplot2::geom_area) %>%
+  #     pull_gg()
+  # )
 
   expect_doppelganger(
     "custom names",
