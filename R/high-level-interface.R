@@ -38,6 +38,7 @@
 #'   vis_cols(num1, fct1, int1, transformer = vis_2d_distr) %>%
 #'   merge_vis()
 #' @importFrom rlang enquos
+#' @importFrom purrr map_chr
 #' @export
 vis_cols <- function(data,
                      ...,
@@ -60,7 +61,8 @@ vis_cols <- function(data,
     if (sub_dir == ".") {
       sub_dir <- NULL
     }
-    walk(vars, transformer, sub_dir = sub_dir, data = data)
+    map_chr(vars, transformer, sub_dir = sub_dir, data = data) %>%
+      invisible()
   } else {
     out <- map(vars, transformer, data = data) %>%
       invoke(rbind, .)
