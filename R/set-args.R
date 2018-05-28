@@ -9,8 +9,9 @@ set_nd_geom_distr <- function(class, aes) {
 #' @importFrom purrr when
 set_1d_geom_distr <- function(class) {
   when(class,
-       all((.) %in% c("numeric", "integer")) ~ quote(geom_density),
-       ~  quote(geom_bar)
+       all((.) %in% c("numeric", "integer", "Date")) ~ quote(geom_density),
+       all((.) %in% c("character", "factor")) ~  quote(geom_bar),
+       ~ quote(geom_density)
   )
 }
 
