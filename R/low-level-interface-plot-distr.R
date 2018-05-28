@@ -30,7 +30,7 @@ vis_distr <- function(data,
                          ...) {
   data <- as_tibble(data)
   aes <- set_aes(aes, names(data))
-  class <- map_chr(data[, aes], class) %>%
+  class <- map_chr(data[, aes], ~class(.x)[1]) %>%
     set_names(names(aes))
   if(is.null(geom)) {
     geom <- set_nd_geom_distr(class, aes)
