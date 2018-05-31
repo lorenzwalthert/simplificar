@@ -6,7 +6,8 @@
 \usage{
 vis_to_file_impl(transformer, data, aes, name = NULL, geom = NULL,
   sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)),
-  dimensions = rep(unit(5, "cm"), 2), device = "pdf", ...)
+  dimensions = rep(unit(5, "cm"), 2), device = "pdf", return_vis = FALSE,
+  ...)
 }
 \arguments{
 \item{transformer}{\code{[template parameter]} The bare name of the transformer to

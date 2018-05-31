@@ -13,32 +13,32 @@
 vis_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  return_plot = FALSE, ...)
 
 vis_1d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  return_plot = FALSE, ...)
 
 vis_2d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  return_plot = FALSE, ...)
 
 vis_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  return_plot = FALSE, ...)
 
 vis_1d_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  return_plot = FALSE, ...)
 
 vis_2d_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  ...)
+  return_plot = FALSE, ...)
 }
 \arguments{
 \item{data}{A data frame with data to visualize.}

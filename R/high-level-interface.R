@@ -45,7 +45,8 @@ vis_cols <- function(data,
                      transformer = vis_1d_distr,
                      sub_dir = NULL,
                      called_for_side_effects = NULL,
-                     k_dimensional = NULL) {
+                     k_dimensional = NULL,
+                     return_plot = FALSE) {
   transformer_name <- deparse(substitute(transformer))
   k_dimensional <- set_null_to(k_dimensional, k_dimensional(transformer_name))
   data_name <- deparse(substitute(data))
@@ -56,19 +57,21 @@ vis_cols <- function(data,
     called_for_side_effects, transformer_name
   )
 
-  if (called_for_se) {
+  if (called_for_se & !return_plot) {
     sub_dir <- set_null_to(sub_dir, data_name)
     if (sub_dir == ".") {
       sub_dir <- NULL
     }
-    map_chr(vars, transformer, sub_dir = sub_dir, data = data) %>%
+    out <- map_chr(vars, transformer,sub_dir = sub_dir, data = data) %>%
       invisible()
   } else {
-    out <- map(vars, transformer, data = data) %>%
+    out <- map(vars, transformer,
+               data = data, return_plot = return_plot) %>%
       invoke(rbind, .)
     out$data <- data_name
     out
   }
+  out
 }
 
 #' Define the aspect ration and it's scale
@@ -78,6 +81,6 @@ vis_cols <- function(data,
 #' @param scale How to transform the ration to obtain width and heigh.
 #' @param units The measurement unit, e.g. "cm". See [grid::unit()].
 #' @export
-width_height_from_aspect_ratio <- function(ratio = 16/9, scale = 5, units = "cm") {
+width_height_from_aspect_ratio <- function(ratio = 16 / 9, scale = 5, units = "cm") {
   grid::unit(scale * c(ratio, 1 / ratio), units)
 }

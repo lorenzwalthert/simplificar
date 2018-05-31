@@ -24,17 +24,21 @@ vis_to_file_impl <- function(transformer,
                         ),
                         dimensions = rep(unit(5, "cm"), 2),
                         device = "pdf",
+                        return_plot = FALSE,
                         ...) {
   ensure_dir(dirname(file))
-  plot <- transformer(data, aes, name, geom, ...) %>%
-    flatten_gg()
+  plot <- transformer(data, aes, name, geom, ...)
 
   ggsave(
     add_ext(file, device),
     device = device,
-    plot = plot,
+    plot = flatten_gg(plot),
       width = dimensions[1],
       height = dimensions[2]
   )
-  invisible(file)
+  if (return_plot) {
+    plot
+  } else {
+    invisible(file)
+  }
 }
