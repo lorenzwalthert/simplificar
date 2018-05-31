@@ -46,4 +46,8 @@ vis_point <- function(data,
 
 #' @export
 #' @rdname vis_point
+vis_1d_point <- vis_point
+
+#' @export
+#' @rdname vis_point
 vis_2d_point <- vis_point

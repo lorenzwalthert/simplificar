@@ -2,16 +2,40 @@
 % Please edit documentation in R/vis_to_file.R
 \name{vis_to_file}
 \alias{vis_to_file}
+\alias{vis_distr_to_file}
 \alias{vis_1d_distr_to_file}
+\alias{vis_2d_distr_to_file}
 \alias{vis_point_to_file}
+\alias{vis_1d_point_to_file}
+\alias{vis_2d_point_to_file}
 \title{Create a visualization and save it to a file}
 \usage{
+vis_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
+  sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
+  ...)
+
 vis_1d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
   ...)
 
+vis_2d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
+  sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
+  ...)
+
 vis_point_to_file(data, aes, name = aes,
+  sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
+  ...)
+
+vis_1d_point_to_file(data, aes, name = aes,
+  sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
+  time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
+  ...)
+
+vis_2d_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
   ...)

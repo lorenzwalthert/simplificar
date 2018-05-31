@@ -2,10 +2,13 @@
 % Please edit documentation in R/low-level-interface-point.R
 \name{vis_point}
 \alias{vis_point}
+\alias{vis_1d_point}
 \alias{vis_2d_point}
 \title{Create a scatter plot}
 \usage{
 vis_point(data, aes, names = aes, geom = NULL, ...)
+
+vis_1d_point(data, aes, names = aes, geom = NULL, ...)
 
 vis_2d_point(data, aes, names = aes, geom = NULL, ...)
 }

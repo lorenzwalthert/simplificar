@@ -15,7 +15,7 @@ NULL
 #' @inheritParams vis_to_file
 #' @inheritParams vis_distr
 #' @export
-vis_1d_distr_to_file <- function(data,
+vis_distr_to_file <- function(data,
                                  aes,
                                  name = aes,
                                  geom = NULL,
@@ -42,6 +42,14 @@ vis_1d_distr_to_file <- function(data,
   ) %>%
     invisible()
 }
+
+#' @rdname vis_to_file
+#' @export
+vis_1d_distr_to_file <- vis_distr_to_file
+
+#' @rdname vis_to_file
+#' @export
+vis_2d_distr_to_file <- vis_distr_to_file
 
 #' @include templates.R
 #' @rdname vis_to_file
@@ -70,4 +78,11 @@ vis_point_to_file <- function(data,
   )
 }
 
+#' @rdname vis_to_file
+#' @export
+vis_1d_point_to_file <- vis_point_to_file
+
+
+#' @rdname vis_to_file
+#' @export
 vis_2d_point_to_file <- vis_point_to_file
