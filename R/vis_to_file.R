@@ -14,6 +14,7 @@ NULL
 #' @rdname vis_to_file
 #' @inheritParams vis_to_file
 #' @inheritParams vis_distr
+#' @export
 vis_1d_distr_to_file <- function(data,
                                  aes,
                                  name = aes,
