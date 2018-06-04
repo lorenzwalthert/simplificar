@@ -26,6 +26,7 @@ vis_distr_to_file <- function(data,
                                  ),
                                  dimensions = rep(unit(5, "cm"), 2),
                                  device = "pdf",
+                              return_vis = FALSE,
                                  ...) {
   vis_to_file_impl(vis_1d_distr,
                    data = data,
@@ -36,6 +37,7 @@ vis_distr_to_file <- function(data,
                    file = file,
                    dimensions = dimensions,
                    device = device,
+                   return_vis = return_vis,
                    ...,
                    # arguments added to dots
                    fill = fill
@@ -65,6 +67,7 @@ vis_point_to_file <- function(data,
                                  ),
                                  dimensions = rep(unit(5, "cm"), 2),
                               device = "pdf",
+                              return_vis = FALSE,
                                  ...) {
   vis_to_file_impl(vis_2d_point,
                    data = data,
@@ -74,6 +77,7 @@ vis_point_to_file <- function(data,
                    file = file,
                    dimensions = dimensions,
                    device = device,
+                   return_vis = return_vis,
                    ...
   )
 }

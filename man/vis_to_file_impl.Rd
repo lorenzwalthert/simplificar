@@ -6,7 +6,8 @@
 \usage{
 vis_to_file_impl(transformer, data, aes, name = NULL, geom = NULL,
   sub_dir = NULL, file = file_path(pkg_name(), sub_dir, time_stamp(name)),
-  dimensions = rep(unit(5, "cm"), 2), device = "pdf", ...)
+  dimensions = rep(unit(5, "cm"), 2), device = "pdf", return_vis = FALSE,
+  ...)
 }
 \arguments{
 \item{transformer}{\code{[template parameter]} The bare name of the transformer to
@@ -34,6 +35,9 @@ the \code{device} argument.}
 passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 
 \item{device}{The device passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
+
+\item{return_vis}{Whether or not the plot should, in addition to being
+written to a file, be the return value of the function call.}
 
 \item{...}{Variables to select. You can use tidy selectors such as
 \code{starts_with(...)}, see \code{\link[tidyselect:select_helpers]{tidyselect::select_helpers()}} for details.}

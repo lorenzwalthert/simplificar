@@ -57,4 +57,24 @@ test_that("to file", {
       expect_true(file.exists(ts))
       unlink(c(ts, return))
     })
+
+
+})
+
+
+test_that("to file and console", {
+  withr::with_dir(
+    rprojroot::find_testthat_root_file("../figs/vis-1d-distr"), {
+      ts <- time_stamp() %>%
+        add_ext("png")
+      return <-  vis_1d_distr_to_file(mtcars,
+                                      aes = "cyl", file = ts, return_vis = TRUE)
+      expect_true(file.exists(ts))
+      expect_doppelganger(
+        "default dispatch continous",
+        return
+      )
+    })
+
+
 })
