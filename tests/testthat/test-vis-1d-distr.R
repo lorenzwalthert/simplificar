@@ -68,13 +68,13 @@ test_that("to file and console", {
       ts <- time_stamp() %>%
         add_ext("png")
       return <-  vis_1d_distr_to_file(mtcars,
-                                      aes = "cyl", file = ts, return_vis = TRUE)
+        aes = "cyl", file = ts, return_vis = TRUE
+      )
       expect_true(file.exists(ts))
       expect_doppelganger(
         "default dispatch continous",
-        return
+        return %>% pull_gg(1)
       )
+      expect_s3_class(return, "tbl_df")
     })
-
-
 })
