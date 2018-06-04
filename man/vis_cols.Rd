@@ -6,7 +6,7 @@
 \usage{
 vis_cols(data, ..., transformer = vis_1d_distr, sub_dir = NULL,
   called_for_side_effects = NULL, k_dimensional = NULL,
-  return_plot = FALSE)
+  return_vis = FALSE)
 }
 \arguments{
 \item{data}{The data to use for plotting.}
@@ -34,7 +34,7 @@ works if the transformer is named after the convention
 underscore and \code{n} is the number of dimensions. An example of a
 transformer meeting this requirement is \code{\link[=vis_1d_distr]{vis_1d_distr()}}.}
 
-\item{return_plot}{Whether or not the plot should, in addition to being
+\item{return_vis}{Whether or not the plot should, in addition to being
 written to a file, be the return value of the function call.}
 }
 \description{

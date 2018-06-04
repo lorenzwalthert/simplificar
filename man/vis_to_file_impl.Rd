@@ -36,6 +36,9 @@ passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 
 \item{device}{The device passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 
+\item{return_vis}{Whether or not the plot should, in addition to being
+written to a file, be the return value of the function call.}
+
 \item{...}{Variables to select. You can use tidy selectors such as
 \code{starts_with(...)}, see \code{\link[tidyselect:select_helpers]{tidyselect::select_helpers()}} for details.}
 }

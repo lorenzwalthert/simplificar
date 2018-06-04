@@ -24,7 +24,7 @@ vis_to_file_impl <- function(transformer,
                         ),
                         dimensions = rep(unit(5, "cm"), 2),
                         device = "pdf",
-                        return_plot = FALSE,
+                        return_vis = FALSE,
                         ...) {
   ensure_dir(dirname(file))
   plot <- transformer(data, aes, name, geom, ...)
@@ -36,7 +36,7 @@ vis_to_file_impl <- function(transformer,
       width = dimensions[1],
       height = dimensions[2]
   )
-  if (return_plot) {
+  if (return_vis) {
     plot
   } else {
     invisible(file)

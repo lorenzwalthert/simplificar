@@ -13,32 +13,32 @@
 vis_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  return_plot = FALSE, ...)
+  return_vis = FALSE, ...)
 
 vis_1d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  return_plot = FALSE, ...)
+  return_vis = FALSE, ...)
 
 vis_2d_distr_to_file(data, aes, name = aes, geom = NULL, fill = "gray60",
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  return_plot = FALSE, ...)
+  return_vis = FALSE, ...)
 
 vis_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  return_plot = FALSE, ...)
+  return_vis = FALSE, ...)
 
 vis_1d_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  return_plot = FALSE, ...)
+  return_vis = FALSE, ...)
 
 vis_2d_point_to_file(data, aes, name = aes,
   sub_dir = deparse(substitute(data)), file = file_path(pkg_name(), sub_dir,
   time_stamp(name)), dimensions = rep(unit(5, "cm"), 2), device = "pdf",
-  return_plot = FALSE, ...)
+  return_vis = FALSE, ...)
 }
 \arguments{
 \item{data}{A data frame with data to visualize.}
@@ -65,6 +65,9 @@ the \code{device} argument.}
 passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 
 \item{device}{The device passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
+
+\item{return_vis}{Whether or not the plot should, in addition to being
+written to a file, be the return value of the function call.}
 
 \item{...}{Passed to the geom. See 'Details'.}
 }

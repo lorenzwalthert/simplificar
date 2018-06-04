@@ -46,7 +46,7 @@ vis_cols <- function(data,
                      sub_dir = NULL,
                      called_for_side_effects = NULL,
                      k_dimensional = NULL,
-                     return_plot = FALSE) {
+                     return_vis = FALSE) {
   transformer_name <- deparse(substitute(transformer))
   k_dimensional <- set_null_to(k_dimensional, k_dimensional(transformer_name))
   data_name <- deparse(substitute(data))
@@ -57,7 +57,7 @@ vis_cols <- function(data,
     called_for_side_effects, transformer_name
   )
 
-  if (called_for_se & !return_plot) {
+  if (called_for_se & !return_vis) {
     sub_dir <- set_null_to(sub_dir, data_name)
     if (sub_dir == ".") {
       sub_dir <- NULL
@@ -65,11 +65,14 @@ vis_cols <- function(data,
     out <- map_chr(vars, transformer,sub_dir = sub_dir, data = data) %>%
       invisible()
   } else {
-    out <- map(vars, transformer,
-               data = data, return_plot = return_plot) %>%
+    if (grepl("\\_to_\\file$", deparse(substitute(transformer)))) {
+    out_raw <- map(vars, transformer, data = data, return_vis = return_vis)
+    } else {
+      out_raw <- map(vars, transformer, data = data)
+    }
+    out <- out_raw %>%
       invoke(rbind, .)
     out$data <- data_name
-    out
   }
   out
 }

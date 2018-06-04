@@ -18,7 +18,7 @@ the names are inferred form \code{aes}.}
 \item{geom}{The bare name of the geom to use. If \code{NULL} (the default),
 it is determined by the class of the data to plot.}
 
-\item{return_plot}{Whether or not the plot should, in addition to being
+\item{return_vis}{Whether or not the plot should, in addition to being
 written to a file, be the return value of the function call.}
 }
 \description{
