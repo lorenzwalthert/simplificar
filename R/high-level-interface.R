@@ -62,11 +62,13 @@ vis_cols <- function(data,
     if (sub_dir == ".") {
       sub_dir <- NULL
     }
-    out <- map_chr(vars, transformer,sub_dir = sub_dir, data = data) %>%
+    out <- map_chr(vars, transformer, sub_dir = sub_dir, data = data) %>%
       invisible()
   } else {
     if (grepl("_to_file$", deparse(substitute(transformer)))) {
-    out_raw <- map(vars, transformer, data = data, return_vis = return_vis)
+    out_raw <- map(vars, transformer,
+      sub_dir = sub_dir, data = data, return_vis = return_vis
+    )
     } else {
       out_raw <- map(vars, transformer, data = data)
     }
