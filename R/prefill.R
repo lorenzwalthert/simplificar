@@ -19,6 +19,7 @@
 #'     transformer = vis_2d_point_with_color, k_dimensional = 2
 #' ) %>%
 #' pull_gg(-1)
+#' @export
 prefill_aes <- function(transformer, ...) {
   named_aes <- c(...)
   function(data, aes, names = aes, geom = NULL, ...) {

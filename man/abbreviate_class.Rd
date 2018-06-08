@@ -13,5 +13,5 @@ abbreviate_class(x)
 Abbreviate a class
 }
 \examples{
-abbreviate_class(c("factor", "numeric", "integer"))
+simplificar:::abbreviate_class(c("factor", "numeric", "integer"))
 }

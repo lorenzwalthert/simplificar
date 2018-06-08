@@ -24,7 +24,7 @@ transform_cols <- function(data, cols, transformer, ...) {
 #'
 #' @param x a character vector of class labels.
 #' @examples
-#' abbreviate_class(c("factor", "numeric", "integer"))
+#' simplificar:::abbreviate_class(c("factor", "numeric", "integer"))
 abbreviate_class <- function(x) {
   x <- ifelse(x == "numeric", "dbl", x)
   x <- ifelse(x == "integer", "int", x)
