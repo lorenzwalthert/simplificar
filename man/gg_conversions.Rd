@@ -44,3 +44,10 @@ gg_raw <- gg_table \%>\%
 gg_raw \%>\%
   blow_gg()
 }
+\seealso{
+Other post-creation manipulators: \code{\link{merge_vis}},
+  \code{\link{mutate_gg}}
+
+Other post-creation manipulators: \code{\link{merge_vis}},
+  \code{\link{mutate_gg}}
+}
