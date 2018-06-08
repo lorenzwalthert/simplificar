@@ -46,15 +46,12 @@ remotes::install_github("lorenzwalthert/simplificar")
 The package provides two interfaces for creating plots: 
 
 * Low-level interface: The functions `vis_[n]d_[*]()`, e.g. `vis_1d_distr()` 
-  that 
-  let you draw one plot at once. They have an argument `aes`, which is wrapped 
-  in `ggplot2::aes_string()` and passed through to the `mapping` argument of 
-  `ggplot2::ggplot()`.
-  There are 
-  two versions of low-level interfaces: One that outputs the plot to the 
-  console (like `vis_1d_distr()` and one that writes to a file (e.g. 
-  `vis_1d_distr_to_file()`) and optionally to the console too. Depending on the 
-  classes of the data provided, 
+  that let you draw one plot at once. They have an argument `aes`, which is 
+  wrapped in `ggplot2::aes_string()` and passed through to the `mapping` 
+  argument of `ggplot2::ggplot()`. There are two versions of low-level 
+  interfaces: One that outputs the plot to the console (like `vis_1d_distr()` 
+  and one that writes to a file (e.g. `vis_1d_distr_to_file()`) and optionally 
+  to the console too. Depending on the classes of the data provided, 
   `simplificar` does a dispatch between ggplot geoms, e.g. to visualize a 
   distribution, it creates bar plots for categorical variables and density 
   plots for continuous data.
