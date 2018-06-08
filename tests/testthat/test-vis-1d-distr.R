@@ -74,8 +74,8 @@ test_that("to file and console", {
       return
     })
   expect_doppelganger(
-    "default dispatch continous to file2",
-    vis_1d_distr(mtcars, aes = "cyl") %>%
+    "default dispatch continous to file",
+    return %>%
       pull_gg()
   )
 })
