@@ -16,7 +16,7 @@
 #' vis_2d_point_with_color <- prefill_aes(vis_2d_point, color = "vs")
 #' mtcars %>%
 #'   vis_cols(everything(),
-#'     transformer = vis_2d_point_with_color, k_dimensional = 2
+#'     transformer = vis_2d_point_with_color
 #' ) %>%
 #' pull_gg(-1)
 #' @export

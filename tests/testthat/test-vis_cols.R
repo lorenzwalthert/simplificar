@@ -1,5 +1,4 @@
 context("vis_cols")
-library("vdiffr")
 
 test_that("correct number of combs are generated depending on transformer", {
   expect_doppelganger(

@@ -1,6 +1,6 @@
 context("test-set-aes")
 
-test_that("multiplication works", {
+test_that("mapping works", {
   expect_equal(
     set_aes(c(x = "cyl", y = "mpg"), names(mtcars)),
     c(x = "cyl", y = "mpg")
@@ -34,5 +34,10 @@ test_that("multiplication works", {
     set_aes(c(col = "hp", "cyl", x = "vs"), names(mtcars)),
     c(x = "vs", y = "cyl", col = "hp")
   )
+  expect_error(
+    set_aes(c(col = "hp", "cyl", x = "svs"), names(mtcars)),
+    "not present in data"
+  )
+
 })
 
