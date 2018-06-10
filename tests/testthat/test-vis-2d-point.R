@@ -1,7 +1,5 @@
 context("vis-2d-point")
 
-library(vdiffr)
-
 test_that("to console", {
   # expect_doppelganger(
   #   "default dispatch point: int / int -> jitter",

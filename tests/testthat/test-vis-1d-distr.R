@@ -1,7 +1,5 @@
 context("vis-1d-distr")
 
-library(vdiffr)
-
 test_that("to console", {
   expect_doppelganger(
     "default dispatch continous",
