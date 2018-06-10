@@ -18,3 +18,28 @@ transform_cols <- function(data, cols, transformer, ...) {
   map_at(data, cols, ~ transformer(.x)) %>%
     as_tibble()
 }
+
+
+#' Abbreviate a class
+#'
+#' @param x a character vector of class labels.
+#' @examples
+#' simplificar:::abbreviate_class(c("factor", "numeric", "integer"))
+abbreviate_class <- function(x) {
+  x <- ifelse(x == "numeric", "dbl", x)
+  x <- ifelse(x == "integer", "int", x)
+  x <- ifelse(x == "character", "chr", x)
+  x <- ifelse(x == "factor", "fct", x)
+  x
+}
+
+tbl_output <- function(data, aes, class, plot) {
+  tibble(
+    data = deparse(substitute(data)),
+    aes_string = concentrate(aes),
+    class_string = concentrate(abbreviate_class(class)),
+    gg = list(plot),
+    aes = list(aes),
+    class = list(abbreviate_class(class))
+  )
+}

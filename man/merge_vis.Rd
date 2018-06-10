@@ -18,3 +18,7 @@ Simple wrapper around \code{\link[gridExtra:grid.arrange]{gridExtra::grid.arrang
 plots <- vis_cols(iris, transformer = vis_1d_distr)
 merge_vis(plots)
 }
+\seealso{
+Other post-creation manipulators: \code{\link{gg_conversions}},
+  \code{\link{mutate_gg}}
+}

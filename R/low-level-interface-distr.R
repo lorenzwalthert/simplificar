@@ -43,14 +43,7 @@ vis_distr <- function(data,
 
   plot <- ggplot(data, invoke(aes_string, aes)) +
     invoke(eval(geom), dots) + xlab(name)
-  tibble(
-    data = deparse(substitute(data)),
-    aes_string = concentrate(aes),
-    class_string = concentrate(class),
-    gg = list(plot),
-    aes = list(aes),
-    class = list(class)
-  )
+  tbl_output(data, aes, class, plot)
 }
 
 

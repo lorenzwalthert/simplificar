@@ -24,3 +24,7 @@ mtcars \%>\%
   mutate_gg(ggplot2::stat_summary(fun.y = mean, geom = "line"), 2, 3) \%>\%
   pull_gg(2)
 }
+\seealso{
+Other post-creation manipulators: \code{\link{gg_conversions}},
+  \code{\link{merge_vis}}
+}

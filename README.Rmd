@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "80%", 
-  cache = TRUE
+  cache = FALSE
 )
 set.seed(1)
 ```
@@ -46,12 +46,12 @@ remotes::install_github("lorenzwalthert/simplificar")
 The package provides two interfaces for creating plots: 
 
 * Low-level interface: The functions `vis_[n]d_[*]()`, e.g. `vis_1d_distr()` 
-  that 
-  let you draw one plot at once. They have an argument `aes`, which basically 
-  let you specify which aesthetics you want to map and how. There are always
-  two versions of low-level interfaces: One that outputs the plot to the 
-  console (like `vis_1d_distr()` and one that writes to a file (e.g. 
-  `vis_1d_distr_to_file()`). Depending on the classes of the data provided, 
+  that let you draw one plot at once. They have an argument `aes`, which is 
+  wrapped in `ggplot2::aes_string()` and passed through to the `mapping` 
+  argument of `ggplot2::ggplot()`. There are two versions of low-level 
+  interfaces: One that outputs the plot to the console (like `vis_1d_distr()` 
+  and one that writes to a file (e.g. `vis_1d_distr_to_file()`) and optionally 
+  to the console too. Depending on the classes of the data provided, 
   `simplificar` does a dispatch between ggplot geoms, e.g. to visualize a 
   distribution, it creates bar plots for categorical variables and density 
   plots for continuous data.
@@ -74,9 +74,14 @@ library(simplificar)
 (plots <- vis_cols(iris, transformer = vis_1d_distr))
 ```
 
-If visualizations should be written to files, just use the 
-corresponding low-level transformer (i.e. `vis_1d_distr_to_file`)
-instead.
+If visualizations should be written to files 
+just use the corresponding low-level transformer (i.e. 
+`vis_1d_distr_to_file`) instead. To enable console output and file output, 
+set the `return_vis` to `TRUE`.
+```{r, eval = FALSE}
+vis_cols(iris, transformer = vis_1d_distr_to_file, return_vis = TRUE)
+```
+
 
 By default, all variables are selected. You can use tidy selectors (see 
 `?tidyselect::vars_select_helpers()`) to only create a few plots.
@@ -91,7 +96,7 @@ to manipulate the gg table, e.g. you can pull out a certain raw gg.
 Let's pull the second last plot that has a numeric aesthetic.
 ```{r, iris_pull}
 plots %>%
-  dplyr::filter(class == "numeric") %>%
+  dplyr::filter(class == "dbl") %>%
   pull_gg(-2)
 ```
 

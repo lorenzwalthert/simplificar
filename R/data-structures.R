@@ -13,6 +13,7 @@
 #' # the reverse operation (only column gg can be restored)
 #' gg_raw %>%
 #'   blow_gg()
+#' @family post-creation manipulators
 NULL
 
 #' @describeIn gg_conversions Flattens a gg table into its raw counterpart.
@@ -47,6 +48,7 @@ concentrate <- function(aes) {
 #' @param index An index. Positive numbers refer to the nth plot in the
 #'   gg table, negative numbers count backwards.
 #' @export
+#' @family post-creation manipulators
 pull_gg <- function(tbl, index = 1) {
   index <- ifelse(index < 0, nrow(tbl) + index + 1, index)
   tbl$gg[[index]]
@@ -74,6 +76,7 @@ gg_tbl_cols <- function() {
 #'   mutate_gg(ggplot2::stat_summary(fun.y = mean, geom = "line"), 2, 3) %>%
 #'   pull_gg(2)
 #' @export
+#' @family post-creation manipulators
 #' @importFrom rlang seq2
 mutate_gg <- function(data, add, ...) {
   dots <- set_dots_mutate(..., nrow = nrow(data))
@@ -103,6 +106,7 @@ set_dots_mutate <- function(..., nrow) {
 #' plots <- vis_cols(iris, transformer = vis_1d_distr)
 #' merge_vis(plots)
 #' @export
+#' @family post-creation manipulators
 merge_vis <- function(data, ...) {
   invoke(gridExtra::grid.arrange, data$gg, ...)
 }

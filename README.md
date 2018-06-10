@@ -36,14 +36,15 @@ The package provides two interfaces for creating plots:
 
   - Low-level interface: The functions `vis_[n]d_[*]()`, e.g.
     `vis_1d_distr()` that let you draw one plot at once. They have an
-    argument `aes`, which basically let you specify which aesthetics you
-    want to map and how. There are always two versions of low-level
-    interfaces: One that outputs the plot to the console (like
-    `vis_1d_distr()` and one that writes to a file (e.g.
-    `vis_1d_distr_to_file()`). Depending on the classes of the data
-    provided, `simplificar` does a dispatch between ggplot geoms,
-    e.g. to visualize a distribution, it creates bar plots for
-    categorical variables and density plots for continuous data.
+    argument `aes`, which is wrapped in `ggplot2::aes_string()` and
+    passed through to the `mapping` argument of `ggplot2::ggplot()`.
+    There are two versions of low-level interfaces: One that outputs the
+    plot to the console (like `vis_1d_distr()` and one that writes to a
+    file (e.g. `vis_1d_distr_to_file()`) and optionally to the console
+    too. Depending on the classes of the data provided, `simplificar`
+    does a dispatch between ggplot geoms, e.g. to visualize a
+    distribution, it creates bar plots for categorical variables and
+    density plots for continuous data.
   - high-level interface: The function `vis_cols()` let’s you plot
     various plots at once, specifying a `transformer`, that is, a
     function belonging to the low-level interface introduced in the
@@ -64,15 +65,20 @@ library(simplificar)
 #> # A tibble: 5 x 6
 #>   data  aes_string   class_string gg       aes       class    
 #>   <chr> <chr>        <chr>        <list>   <list>    <list>   
-#> 1 iris  Sepal.Length numeric      <S3: gg> <chr [1]> <chr [1]>
-#> 2 iris  Sepal.Width  numeric      <S3: gg> <chr [1]> <chr [1]>
-#> 3 iris  Petal.Length numeric      <S3: gg> <chr [1]> <chr [1]>
-#> 4 iris  Petal.Width  numeric      <S3: gg> <chr [1]> <chr [1]>
-#> 5 iris  Species      factor       <S3: gg> <chr [1]> <chr [1]>
+#> 1 iris  Sepal.Length dbl          <S3: gg> <chr [1]> <chr [1]>
+#> 2 iris  Sepal.Width  dbl          <S3: gg> <chr [1]> <chr [1]>
+#> 3 iris  Petal.Length dbl          <S3: gg> <chr [1]> <chr [1]>
+#> 4 iris  Petal.Width  dbl          <S3: gg> <chr [1]> <chr [1]>
+#> 5 iris  Species      fct          <S3: gg> <chr [1]> <chr [1]>
 ```
 
-If visualizations should be written to files, just use the corresponding
-low-level transformer (i.e. `vis_1d_distr_to_file`) instead.
+If visualizations should be written to files just use the corresponding
+low-level transformer (i.e. `vis_1d_distr_to_file`) instead. To enable
+console output and file output, set the `return_vis` to `TRUE`.
+
+``` r
+vis_cols(iris, transformer = vis_1d_distr_to_file, return_vis = TRUE)
+```
 
 By default, all variables are selected. You can use tidy selectors (see
 `?tidyselect::vars_select_helpers()`) to only create a few plots.
@@ -82,8 +88,8 @@ vis_cols(iris, contains("Width"))
 #> # A tibble: 2 x 6
 #>   data  aes_string  class_string gg       aes       class    
 #>   <chr> <chr>       <chr>        <list>   <list>    <list>   
-#> 1 iris  Sepal.Width numeric      <S3: gg> <chr [1]> <chr [1]>
-#> 2 iris  Petal.Width numeric      <S3: gg> <chr [1]> <chr [1]>
+#> 1 iris  Sepal.Width dbl          <S3: gg> <chr [1]> <chr [1]>
+#> 2 iris  Petal.Width dbl          <S3: gg> <chr [1]> <chr [1]>
 ```
 
 All plots are stored in the list column `gg`. We use the terminology gg
@@ -94,7 +100,7 @@ Let’s pull the second last plot that has a numeric aesthetic.
 
 ``` r
 plots %>%
-  dplyr::filter(class == "numeric") %>%
+  dplyr::filter(class == "dbl") %>%
   pull_gg(-2)
 ```
 
@@ -156,9 +162,9 @@ The same is true for the class attribute. The columns `aes_string` and
 ``` r
 multiple_vis
 #> # A tibble: 1 x 6
-#>   data  aes_string class_string    gg       aes       class    
-#>   <chr> <chr>      <chr>           <list>   <list>    <list>   
-#> 1 .     hp, cyl    numeric, factor <S3: gg> <chr [2]> <chr [2]>
+#>   data  aes_string class_string gg       aes       class    
+#>   <chr> <chr>      <chr>        <list>   <list>    <list>   
+#> 1 .     vs, cyl    fct, fct     <S3: gg> <chr [2]> <chr [2]>
 ```
 
 **Generating all pair-wise point visualizations**
@@ -276,11 +282,11 @@ vis_cols(mtcars_converted, vs, cyl, hp,
 
 #> Warning: Ignoring unknown parameters: width, height
 #> # A tibble: 3 x 6
-#>   data             aes_string class_string    gg       aes       class    
-#>   <chr>            <chr>      <chr>           <list>   <list>    <list>   
-#> 1 mtcars_converted vs, cyl    factor, factor  <S3: gg> <chr [2]> <chr [2]>
-#> 2 mtcars_converted vs, hp     factor, numeric <S3: gg> <chr [2]> <chr [2]>
-#> 3 mtcars_converted cyl, hp    factor, numeric <S3: gg> <chr [2]> <chr [2]>
+#>   data             aes_string class_string gg       aes       class    
+#>   <chr>            <chr>      <chr>        <list>   <list>    <list>   
+#> 1 mtcars_converted vs, cyl    fct, fct     <S3: gg> <chr [2]> <chr [2]>
+#> 2 mtcars_converted vs, hp     fct, dbl     <S3: gg> <chr [2]> <chr [2]>
+#> 3 mtcars_converted cyl, hp    fct, dbl     <S3: gg> <chr [2]> <chr [2]>
 ```
 
 Note that you the you can only pre-fill arguments that are not
